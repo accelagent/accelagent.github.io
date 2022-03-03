@@ -918,7 +918,7 @@ ${math}
       } else if (url.slice(-5) == ".html") {
         var label = "HTML";
       }
-      return ` &ensp;<a href="${url}">[${label || "link"}]</a>`;
+      return ` &ensp;<a target="__blank" href="${url}">[${label || "link"}]</a>`;
     } /* else if ("doi" in ent){
       return ` &ensp;<a href="https://doi.org/${ent.doi}" >[DOI]</a>`;
     }*/ else {
@@ -2094,7 +2094,7 @@ d-appendix > distill-appendix {
       ${frontMatter.authors.map(author => `
         <p class="author">
           ${author.personalURL ? `
-            <a class="name" href="${author.personalURL}">${author.name}</a>` : `
+            <a class="name" target="__blank" href="${author.personalURL}">${author.name}</a>` : `
             <span class="name">${author.name}</span>`}
         </p>
         <p class="affiliation">
@@ -2115,10 +2115,8 @@ d-appendix > distill-appendix {
         <p><em>Not published yet.</em></p>`}
     </div>
     <div>
-      <h3>DOI</h3>
-      ${frontMatter.doi ? `
-        <p><a href="https://doi.org/${frontMatter.doi}">${frontMatter.doi}</a></p>` : `
-        <p><em>No DOI yet.</em></p>`}
+      <h3>arXiv</h3>
+      <p><a class="paper-link" target="__blank" href="https://arxiv.org/abs/2203.01302">Full paper</a></p>
     </div>
   </div>
 `;

@@ -373,3 +373,7 @@ figure#level-buffer-composition {
 video#bipedal-level-evolution {
     width: 100%;
 }
+
+.paper-link {
+    color: #ff8300;
+}
