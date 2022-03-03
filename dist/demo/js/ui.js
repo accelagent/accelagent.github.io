@@ -10,7 +10,6 @@ import EnvsSet from "./ui_state/components/envs_set.js";
 import GlobalElements from "./ui_state/components/global_elements.js";
 import RadarChart from "./radarChart.js";
 
-
 // Sync videos
 let maze_videos = document.getElementsByClassName("accel-maze-video");
 maze_videos[0].addEventListener('seeked', function() {
