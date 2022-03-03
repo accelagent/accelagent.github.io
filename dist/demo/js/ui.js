@@ -18,6 +18,12 @@ maze_videos[0].addEventListener('seeked', function() {
   }
 }, false);
 
+// Force videos to play
+let videoList = document.getElementsByTagName("video");
+for (let i=0; i<videoList.length; i++) {
+  videoList[i].play();
+}
+
 /**
  * Opens the given modal.
  * @param modal {HTMLDivElement}
