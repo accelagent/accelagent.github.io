@@ -4,4 +4,4 @@ node_modules
 bin/
 package-lock.json
 
-policy_models/
+policy_models_staging
