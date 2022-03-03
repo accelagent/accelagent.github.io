@@ -1,0 +1,572 @@
+<!--
+  Copyright 2018 The Distill Template Authors
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!doctype html>
+
+<head>
+  <script src="template.v2.js"></script>
+
+<!--   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+        crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="./bootstrap.forms.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+          crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+
+  <script defer src="demo/js/multirange.js"></script>
+  <link rel="stylesheet" href="./multirange.css">
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
+  <!-- <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> -->
+
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"> -->
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+
+  <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+  <script src=//cdnjs.cloudflare.com/ajax/libs/seedrandom/2.3.10/seedrandom.min.js></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/intro.js@4.1.0/intro.min.js"></script>
+
+  <!--SCRIPTS DEPENDENCIES-->
+  <script src="demo/js/box2d.js"></script>
+
+  <script src="demo/js/Box2D_dynamics/water_dynamics.js"></script>
+  <script defer src="demo/js/Box2D_dynamics/climbing_dynamics.js"></script>
+  <script defer src="demo/js/Box2D_dynamics/contact_detector.js"></script>
+  <script defer src="demo/js/utils/custom_user_data.js"></script>
+
+  <!-- Morphologies -->
+  <script defer src="demo/js/bodies/bodies_enum.js"></script>
+  <script defer src="demo/js/bodies/abstract_body.js"></script>
+  <script defer src="demo/js/bodies/walkers/walker_abstract_body.js"></script>
+  <script defer src="demo/js/bodies/walkers/classic_bipedal_body.js"></script>
+  <script defer src="demo/js/bodies/walkers/spider_body.js"></script>
+  <script defer src="demo/js/bodies/climbers/climber_abstract_body.js"></script>
+  <script defer src="demo/js/bodies/climbers/climbing_profile_chimpanzee.js"></script>
+  <script defer src="demo/js/bodies/swimmers/swimmer_abstract_body.js"></script>
+  <script defer src="demo/js/bodies/swimmers/fish_body.js"></script>
+
+  <script defer src="demo/js/CPPN/cppn.js"></script>
+  <script defer src="demo/js/envs/multi_agents_continuous_parkour.js"></script>
+  <script defer src="demo/js/game.js"></script>
+  <script defer src="demo/js/draw_p5js.js"></script>
+  <script defer src="demo/js/i18n.js"></script>
+
+  <script defer src="demo/js/index.js"></script>
+  <script type="module" src="demo/js/ui.js"></script>
+
+  <link rel="stylesheet" href="./demo.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf8">
+
+</head>
+
+<body>
+  <d-front-matter>
+    <script id='distill-front-matter' type="text/json">{
+    "title": "Evolving Curricula with Regret-Based Environment Design",
+    "description": "Combining evolution with regret-based curricula to produce highly robust agents.",
+    "published": "Feb 22, 2022",
+    "authors": [
+      {
+        "author":"Jack Parker-Holder<sup>*</sup>",
+        "authorURL":"https://twitter.com/jparkerholder",
+        "affiliations": [
+          {"name": "Oxford University", "url":"https://www.robots.ox.ac.uk/~parg/"}]
+      },
+      {
+        "author":"Minqi Jiang<sup>*</sup>",
+        "authorURL":"https://minch.co/",
+        "affiliations": [
+          {"name": "UCL", "url": "https://dark.cs.ucl.ac.uk/"},
+          {"name": "Meta AI", "url":"https://ai.facebook.com/"}
+        ]
+      },
+      {
+        "author":"Michael Dennis",
+        "authorURL":"https://people.eecs.berkeley.edu/~michael_dennis/",
+        "affiliations": [
+          {"name": "UC Berkeley", "url": "https://humancompatible.ai/people#people"}
+        ]
+      },
+      {
+        "author":"Mikayel Samvelyan",
+        "authorURL":"https://www.samvelyan.com/",
+        "affiliations": [
+          {"name": "UCL", "url": "https://dark.cs.ucl.ac.uk/"},
+          {"name": "Meta AI", "url":"https://ai.facebook.com/"}
+        ]
+      },
+      {
+        "author":"Jakob Foerster",
+        "authorURL":"https://jakobfoerster.com/",
+        "affiliations": [
+          {"name": "Oxford University", "url": "https://www.st-annes.ox.ac.uk/cpt_people/foerster-dr-jakob/"}
+        ]
+      },
+      {
+        "author":"Edward Grefenstette",
+        "authorURL":"https://twitter.com/egrefen",
+        "affiliations": [
+          {"name": "UCL", "url": "https://dark.cs.ucl.ac.uk/"},
+          {"name": "Meta AI", "url":"https://ai.facebook.com/"}
+        ]
+      },
+      {
+        "author":"Tim Rocktäschel",
+        "authorURL":"https://twitter.com/_rockt",
+        "affiliations": [
+          {"name": "UCL", "url": "https://dark.cs.ucl.ac.uk/"},
+          {"name": "Meta AI", "url":"https://ai.facebook.com/"}
+        ]
+      }
+    ],
+    "katex": {
+      "delimiters": [
+        {"left": "$$", "right": "$$", "display": false}
+      ]
+    }
+  }</script>
+  </d-front-matter>
+  <div id='cover'>
+    <d-title>
+  <!--     <figure style="grid-column: page; margin: 1rem 0;"><img src="momentum.png"
+          style="width:100%; border: 1px solid rgba(0, 0, 0, 0.2);" /></figure> -->
+      <p></p>
+    </d-title>
+  </div>
+  <d-byline></d-byline>
+
+  <d-article>
+    <!-- <a class="marker" href="#section-1" id="section-1"><span>1</span></a> -->
+    <h2>Overview</h2>
+    <p>
+    We evolve environments at the frontier of a reinforcement learning agent's capabilities, leading to self-supervised teacher-student processes with strong zero-shot generalization results for agents learning to walk through challenging terrain, and navigating complex human-designed mazes.
+    </p>
+
+    <!-- Canvas -->
+    <div id="canvas_container"></div>
+
+    <!-- Main buttons row -->
+    <div id="mainButtons" class="row justify-content-center">
+      <!-- Agents menu list -->
+      <div id="env-control-panel">
+        <div id="agents-menu-container">
+          <ul id="agents-menu"></ul>
+        </div>
+
+        <!-- Environment controls -->
+        <ul id="env-controls">
+          <li>
+            <div>
+            <div class="slider-label">Roughness</div>
+            <div class="slider-value" id="ground-roughness-value">1</div>
+            </div>
+            <input id="ground-roughness-slider" type="range" min="0" max="15" multiple value="1,1" />
+          </li>
+
+          <li>
+            <div>
+            <div class="slider-label">Stump height</div>
+            <div class="slider-value" id="stump-height-value">1 - 3</div>
+            </div>
+            <input id="stump-height-slider" type="range" min="0" max="4" multiple value="1,3" />
+          </li>
+
+          <li>
+            <div>
+            <div class="slider-label">Pit gap</div>
+            <div class="slider-value" id="pit-gap-value">3 - 5</div>
+            </div>
+            <input id="pit-gap-slider" type="range" min="0" max="5" multiple value="3,5" />
+          </li>
+
+          <li>
+            <div>
+            <div class="slider-label">Stair steps</div>
+            <div class="slider-value" id="stair-steps-value">3 - 5</div>
+            </div>
+            <input id="stair-steps-slider" type="range" min="0" max="10" multiple value="3,5" />
+          </li>
+        </ul>
+
+        <div id="radar-chart"></div>
+      </div>
+
+      <!-- Run/reset buttons -->
+      <div id="env-buttons-container">
+        <div class="col-auto py-2 px-1">
+            <button id="runButton" class="btn btn-success" title="Run the simulation"><span class="fas fa-play">Run</span></button>
+        </div>
+        <div class="col-auto py-2 px-1">
+            <button id="resetButton" class="btn btn-danger" title="Reset the simulation"><span class="fas fa-undo-alt fa-lg">Reset</span></button>
+        </div>
+      </div>
+    </div>
+    <figcaption>Interactive demo. Craft your own challenging levels on which to compare an ACCEL agent to baseline methods.</figcaption>
+
+    <h2>Introduction</h2>
+
+    <p>
+    Deep reinforcement learning (RL) has seen tremendous success over the past decade. However, agents trained on fixed environments are brittle, often failing the moment the environment changes even slightly, thus limiting the real-world applicability of current RL methods. A common remedy is to introduce more training data diversity by randomizing the environment’s parameters in every episode—a process called domain randomization (DR). For example, these parameters might control the friction coefficient and lighting conditions in a robotic arm simulation or the position of obstacles in a maze (we call each such environment variation a level). Procedurally generating training levels to expose RL agents to more diverse experiences has quickly become a common method for improving the robustness of RL agents. However, DR is often not enough to train robust agents in domains where the agent struggles to make progress on many challenging levels. 
+    </p>
+
+    <p>
+    Adaptive curriculum methods match the complexity of training levels to an agent’s current capabilities, and have been shown to produce more robust policies in fewer training steps than domain randomization. These methods can be viewed as a game between a teacher that designs challenging levels and a student that solves them. This game is potentially open-ended, leading to the co-evolution of generally-capable students. By tailoring the distribution of entire levels during training, adaptive curricula perform unsupervised environment design (UED). However, training an environment-designing teacher is difficult, and the prior state-of-the-art UED method, Prioritized Level Replay (PLR), simply finds challenging levels through random search, making it unable to build off of previously found structures that were useful for training agents in the past. We can also expect its performance to degrade as the size of the design space grows, limiting the potential for open-ended co-evolution between teacher and student. In contrast, the evolutionary processes between organisms, and their environment that UED resembles, efficiently search the design space by successively mutating a population and selecting the fittest individuals. 
+    </p>
+
+    <div class="centered-content-container">
+    <figure>
+      <div class="accel-maze-video-container">
+        <video class="accel-maze-video" autoplay muted loop>
+          <source src="video/empty1.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+
+        <video class="accel-maze-video" autoplay muted loop>
+          <source src="video/empty2.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+
+        <video class="accel-maze-video" autoplay muted loop>
+          <source src="video/empty3.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+      </div>
+      <figcaption>Examples of levels generated by ACCEL from an initially empty maze.</figcaption>
+    </figure>
+    </div>
+
+    <p>
+    We combine evolution with a principled regret-based environment designer in an algorithm called Adversarially Compounding Complexity by Editing Levels (ACCEL). As in PLR, our new method uses the difference between how well an agent did in an environment and how well it could have done (a metric known in decision theory as regret) to quantify the learning potential of revisiting this environment in the future. The important difference from PLR is that ACCEL evolves a curriculum by making small edits (e.g. mutations) to previously high regret levels, thus constantly producing new levels at the frontier of the student agent's capabilities. By compounding complexity over time, ACCEL harnesses the potential for efficient, open-ended search inherent to evolution. Our results show that ACCEL’s adaptive curricula lead to RL agents that outperform existing auto-curriculum learning methods.
+    </p>
+
+    <p>
+    The rest of this article describes ACCEL in more technical detail. We first provide the necessary background on the UED formalism, followed by a comprehensive description of the ACCEL algorithm. We then present our experimental results in two challenging domains consisting of maze navigation and continuous-control bipedal locomotion, where ACCEL evolves levels with higher complexity and produces policies exhibiting significantly improved generalization compared to other adaptive curriculum methods. 
+    </p>
+
+    <h2>Background</h2>
+
+    <h3>Unsupervised Environment Design</h3>
+    <p>
+    The RL problem is typically formalized as an agent trying to solve a Markov Decision Process (MDP), which is defined as a tuple $$\langle S, A, \mathcal{T}, \mathcal{R}, \gamma \rangle$$, where $$S$$ and $$A$$ stand for the sets of states and actions respectively and $$\mathcal{T}: S \times A \rightarrow \mathbf{\Delta}(S)$$ is a transition function representing the probability that the system transitions from a state $$s_t \in S$$ to $$s_{t+1} \in S$$ given action $$a_t \in A$$. Each transition also induces an associated reward $$r_t$$ generated by a reward function $$\mathcal{R}: S \rightarrow \mathbb{R}$$, and $$\gamma$$ is a discount factor. When provided with an MDP, the goal of RL is to learn a policy $$\pi$$ that maximizes expected discounted reward, i.e. $$\mathbb{E}\left[\sum_{i=0}^{T} r_t\gamma^t\right]$$. 
+    </p>
+
+    <p>
+    Despite the generality of the MDP framework, it is often an unrealistic model for real-world environments. First, it assumes full observability of the state, which is often impossible in practice. This is addressed in partially-observable MDPs, or POMDPs, which include an observation function $$\mathcal{I}: S \rightarrow O$$ which maps the true state (which is unknown to the agent) to a potentially noisy set of observations $$O$$. Secondly, the traditional MDP framework assumes a single reward and transition function, which are fixed throughout learning. Instead, in the real world, agents may experience variations not seen during training, which makes it crucial that policies are capable of robust transfer.
+    </p>
+
+    <p>
+    To address these issues, we use the recently introduced <i>Underspecified POMDP</i>, or UPOMDP<d-cite bibtex-key="paired"></d-cite>, given by $$\mathcal{M} = \langle A, O, \Theta, S^{\mathcal{M}}, \mathcal{T}^{\mathcal{M}},\mathcal{I}^{\mathcal{M}},\mathcal{R}^{\mathcal{M}},\gamma \rangle$$. This definition is identical to a POMDP with the addition of $$\Theta$$ to represent the free parameters of the environment, similar to the context in a Contextual MDP<d-cite bibtex-key="modi2017markov"></d-cite>. These parameters can be distinct at every time step and incorporated into the transition function $$\mathcal{T}^{\mathcal{M}}: S \times A \times \Theta \rightarrow \mathbf{\Delta}(S)$$. Following Jiang et al, 2021<d-cite bibtex-key="jiang2021robustplr"></d-cite> we define a <i>level</i> $$\mathcal{M}_{\theta}$$ as an environment resulting from a fixed $$\theta \in \Theta$$. We define the value of $$\pi$$ in $$\mathcal{M}_{\theta}$$ to be
+    $$V^{\theta}(\pi) = \mathbb{E}\left[\sum_{i=0}^{T} r_t\gamma^t\right]$$ where $$r_t$$ are the rewards achieved by $$\pi$$ in $$\mathcal{M}_{\theta}$$. UPOMDPs benefit from their generality, since $$\Theta$$ can represent possible dynamics or changes to observations (e.g. in sim2real<d-cite bibtex-key="peng2017dr, rubiks_cube, dexterity"></d-cite>), different reward functions, or differing game maps in procedurally generated environments.
+    </p>
+
+    <h3>Methods for Unsupervised Environment Design</h3>
+    <p>
+    The goal of Unsupervised Environment Design (UED)<d-cite bibtex-key="paired"></d-cite> is to produce a series of levels that form a curriculum for a student agent, such that the student agent is capable of systematic generalization across all possible levels. To do this, the teacher maximizes some utility function $$U_t(\pi, \theta)$$, for example constant utility for a DR generator:
+    </p>
+
+    <span id="eq:dr_utility"></span>
+    <d-math block>
+    \begin{aligned}
+    U_t^U(\pi, \theta) = C
+    \tag{1}
+    \end{aligned}
+    </d-math>
+
+    <p>
+    for any constant $$C$$. Recent approaches proposed to use objectives seeking to maximize <i>regret</i>, defined as the difference between the expected return of the current policy and the optimal policy, i.e:
+    </p>
+
+    <d-math block>
+      \begin{align}
+      U_t^R(\pi, \theta) & =\underset{\pi^* \in \Pi}{\arg\max}\;{\text{Regret}^{\theta}(\pi,\pi^*)} \tag{2} \\
+      & = \underset{\pi^* \in \Pi}{\arg\max}\;\{V^\theta(\pi^*)-V^\theta(\pi)\} \tag{3}
+      \end{align}
+    </d-math>
+
+    <p>
+    Regret-based objectives are desirable as they have been shown to promote the simplest possible levels that the agent cannot currently solve in a range of settings<d-cite bibtex-key="paired, jiang2021robustplr"></d-cite>. More formally, if $$S_t= \Pi$$ is the strategy set of the student and $$S_t = \Theta$$ is the strategy set of the teacher, and if the learning process reaches a Nash equilibrium, then the resulting student policy $$\pi$$ converges to a minimax regret policy, given by:
+    </p>
+
+    <d-math block>
+    \pi = \underset{{\pi_A \in \Pi}}{\arg\min}\{\max_{\theta,\pi_B \in \Theta , \Pi}\{\text{Regret}^{\theta}(\pi_A,\pi_B)\}\} \tag{4}
+    </d-math>
+
+    <p>
+    This is a desirable property, however it is important to note that without access to $$\pi^*$$, UED algorithms must approximate the regret, while multi-agent learning systems may not always converge<d-cite bibtex-key="mazumdarrs20"></d-cite>. Indeed, the Achilles' heel of methods like PAIRED<d-cite bibtex-key="paired"></d-cite>, which attempt to directly train the teacher, is the challenge of the RL problem faced by the teacher, featuring sparse rewards and long horizon credit assignment. An alternative regret-based UED approach is <i>Prioritized Level Replay</i> (PLR)<d-cite bibtex-key="plr, jiang2021robustplr"></d-cite>. PLR trains a single student agent but with two teachers: a random generator (following <a href="#eq:dr_utility">Equation 1</a>) and a <i>curator</i>. The curator maintains a buffer of previously experienced levels and actively samples those with high approximate regret. In the context of PLR, there is only a single student agent, thus Jiang et al, 2021<d-cite bibtex-key="jiang2021robustplr"></d-cite> approximate regret using the <i>positive value loss</i>, given by:
+    </p>
+
+    <span id="eq:pvl"/>
+    <d-math block>
+    \frac{1}{T}\sum_{t=0}^{T} \max \left(\sum_{k=t}^T(\gamma\lambda)^{k-t}\delta_k, 0\right) \tag{5}
+    </d-math>
+
+    <p>
+    where $$\lambda$$ and $$\gamma$$ are the Generalized Advantage Estimation (GAE)<d-cite bibtex-key="schulman2016gae"></d-cite> and MDP discount factors respectively, and $$\delta_t$$, the  TD-error at timestep $$t$$. Equipped with this method for approximating regret, the result from Corollary 1 in Jiang et al, 2021<d-cite bibtex-key="jiang2021robustplr"></d-cite> proves that if the student agent only trains on curated levels, then it will follow a minimax regret strategy at equilibrium. 
+    This is counter intuitive as it requires the student to discard gradients produced from levels samples directly from the generator, and thereby train on less data. 
+    </p>
+
+    <p>
+    Empirically PLR has been shown produce policies with strong generalization capabilities, yet its main weakness is that it can only curate levels that were randomly sampled from the full distribution. Indeed, if we wish to use high dimensional design spaces then it may be highly unlikely to randomly encounter levels at the frontier of the agent's current capabilities. Furthermore, it may be a challenge to sample complex structures with the frequency required to train agents capable of solving them.
+    </p>
+
+    <h2>ACCEL: Adversarially Compounding Complexity by Editing Levels</h2>
+
+    <div class="centered-content-container">
+      <figure>
+        <img id="figure-accel-overview" src="img/accel-overview.svg"/>
+        <figcaption>An overview of ACCEL. Levels are randomly sampled from a generator and evaluated, with high-regret levels added to the level replay buffer. The curator selects levels to replay, and the student only trains on replay levels. After training, the replayed levels are edited and evaluated again to compute regret for level replay</figcaption>
+      </figure>
+    </div>
+
+    <p>
+    In this work we introduce ACCEL, a new algorithm for UED, combining an evolutionary environment generator with a principled regret-based curator. Unlike PLR which relies on random sampling to produce new batches of levels, we instead propose to make edits to previously curated ones. The key insight in this work is that using regret as a fitness function for evolution makes it possible to consistently produce batches of levels at the frontier of agent capabilities. Indeed, by iteratively editing and curating levels, the levels in the buffer become increasingly complex. 
+    </p>
+
+    <p>
+    Following Robust PLR<d-cite bibtex-key="jiang2021robustplr"></d-cite> we do not initially train on edited levels. Instead, we evaluate them and only add them to the level replay buffer if they have high estimated regret, using positive value loss (<a href="#eq:pvl">Equation 5</a>). Our approach opens the door to more advanced mechanisms, such as search-based editing, but in this work we predominantly make use of simple, random mutations. The full procedure detailed below:
+    </p>
+
+    <p>
+      <div id="accel-algo-container">
+        <img id="accel-algo" srcset="img/accel_algo.svg"></img>
+      </div>
+    </p>
+
+<!--     <p>
+      <div id="accel-algo-container-2">
+        <span class="algo-define">Input:</span> Buffer size $$K$$, initial fill ratio $$\rho$$, level generator $$G$$
+        <br/>
+        <span class="algo-define">Initialize:</span> Initialize policy $$\pi(\phi)$$, level buffer $$\mathbf{\Lambda}$$
+        <br/>
+        Sample $$K\rho$$ levels.
+        <br/>
+        <span class="algo-ctrl">while</span> not converged <span class="algo-ctrl">do:</span>
+      </div>
+    </p>
+ -->
+
+    <p>
+    ACCEL can be seen as a UED algorithm taking a step towards open-ended evolution<d-cite bibtex-key="stanley2017open"></d-cite>, whereby the fitness corresponds (approximate) regret, since levels only stay in the population (or level replay buffer) if they meet the criteria for curation. However, ACCEL avoids some weaknesses of evolutionary algorithms such as POET: First, ACCEL has a population of levels but not a population of agents. Thus, ACCEL only requires a single desktop GPU for training, in contrast to evolutionary approaches which typically require a large CPU cluster. Further, ACCEL removes the agent selection problem, instead training a single generally capable agent. Finally, since ACCEL uses a minimax <i>regret</i> (rather than minimax) objective, it naturally promotes levels at the frontier of agent's capabilities, rather than relying on domain specific knowledge (such as reward ranges). Training on high regret levels also means that ACCEL inherits the robustness guarantees in equilbrium from Robust PLR (from Corrollary 1 in Jiang et al 2021<d-cite bibtex-key="jiang2021robustplr"></d-cite>):
+    </p>
+
+    <p>
+    <b>Remark 1.</b> <i>If ACCEL reaches a Nash equilibrium, then the student policy is following a minimax regret strategy.</i>
+    </p>
+
+    <p>
+    This is in stark contrast with other evolutionary approaches, which rely solely on empirical results. As we will show next, a key strength of ACCEL is its generality, producing highly capable agents in a diverse range of environments, without domain knowledge. 
+    </p>
+
+    <h2>Experiments</h2>
+
+    <p>
+    We tested ACCEL in a diverse range of environments, comparing against a series of competitive baselines. First we show ACCEL can produce agents that can solve complex mazes, either in a fully observable lava grid or a larger partially observable maze. In both cases, the curriculum begins with a simple empty room, and the editor makes incremental changes to add or remove tiles. As we see, this approach leads to highly complex structures emerging.
+    </p>
+
+    <div class="centered-content-container">
+    <figure>
+      <div class="accel-lavagrid-video-container">
+        <video class="accel-lavagrid-video" autoplay muted loop>
+          <source src="video/lava1.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+
+        <video class="accel-lavagrid-video" autoplay muted loop>
+          <source src="video/lava2.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+
+        <video class="accel-lavagrid-video" autoplay muted loop>
+          <source src="video/lava3.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+
+        <video class="accel-lavagrid-video" autoplay muted loop>
+          <source src="video/lava4.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+        </video>
+      </div>
+      <figcaption>Examples of Lava Grid levels generated by ACCEL from an initially empty room.</figcaption>
+    </figure>
+    </div>
+
+    <p>
+    Interestingly, the agent not only solves these complex structures, but is also robust to a series of challenging human designed tasks. In the case of MiniGrid we used the full set of test levels from previous works, and see that ACCEL produces a highly capable agent. 
+    </p>
+
+    <!-- Insert video of ACCEL on bipedal walker -->
+
+    <div class="centered-content-container">
+      <figure>
+        <img id="minigrid-results" src="img/minigrid_results.svg"/>
+        <figcaption>Zero-shot transfer performance of each method to human-designed mazes.</figcaption>
+      </figure>
+    </div>
+
+    <p>
+    Given the strength of this performance we were curious to see if it would translate to even more complex settings. To test this, we used a $$51 \times 51$$ procedurally generated maze environment, representing a significant increase in size from mazes seen at training time ($$13 \times 13$$), while also including a $$50\times$$ longer episode horizon. Once again the ACCEL agents performed well, achieving over $$50\%$$ solved rate over 100 trials. The next best agent was PLR with $$25\%$$, while the other baselines failed.
+    </p>
+
+    <div class="centered-content-container">
+      <figure class="centered-figure">
+          <video id="perfect-maze-large-video" autoplay muted loop>
+            <source src="video/perfect_maze_large.mp4" type="video/mp4">
+             Your browser does not support the video tag.
+          </video>
+        <figcaption>An ACCEL agent solving a $$51 \times 51$$ single-component "perfect maze."</figcaption>
+      </figure>
+    </div>
+
+    <p>
+    Next we moved to the BipedalWalker environment, popularized by the seminal POET paper. In this setting, the environment design space is an eight dimensional indirect encoding representing a series of different obstacles for a walker robot. We used the same values as in POET, and begin the ACCEL curriculum with simple initial tracks. 
+    </p>
+
+    <p>
+    As we see though, by compounding multiple edits, the agent quickly learns to solve highly complex levels. 
+    </p>
+
+    <p>
+    Our primary objective is to produce a robust agent, so we evaluated it on each of the individual challenges, to isolate the individual capabilities.
+    </p>
+
+    <div class="centered-content-container">
+      <figure id="bipedal-zs-challenges">
+        <img src="img/bipedal-zs-challenges.svg"/>
+        <figcaption>Zero-shot transfer performance of each method in BipedalWalkerHardcore and environments testing the individual terrain challenges. The mean and standard error over 10 training seeds are shown.</figcaption>
+      </figure>
+    </div>
+
+    <p>
+    As in the MiniGrid experiments, the ACCEL agent is the best performing across all of the test environments, with the baselines struggling to learn due to the challenging design space.
+    </p>
+
+    <p>
+    Despite their differing objectives, we also wanted to test ACCEL more directly against POET. To do this we used the original lower dimensional design space from the POET paper, which excludes stairs from the encoding. We trained the ACCEL agent for 50,000 student updates, which equates to just over 3B environment steps—considerably under the approximately 500B steps used to train POET<d-cite bibtex-key="jiang2021robustplr"></d-cite>. Using the difficulty criteria from the POET authors, we see the ACCEL agent is capable of creating and solving "extremely challenging" levels, despite using neither a population nor a novelty criteria in the environment design space.
+    </p>
+
+    <div class="centered-content-container">
+      <figure id="level-buffer-composition">
+        <img src="img/level-buffer-composition.svg"/>
+        <figcaption>Percentage of the ACCEL level replay buffer falling into each difficulty category. Note the complexity is purely emergent in the pursuit of high-regret levels</figcaption>
+      </figure>
+    </div>
+
+    <p>
+    We believe this result demonstrates the power of using regret in an evolutionary curriculum, and shows what is possible with a single, generally capable agent. However, this certainly does not mean that populations of agents do not have a place. It is likely that as we move to yet more challenging environments it becomes important to have a population of specialists, to discover diverse complex behaviors. This remains an open question that we are excited to explore in the future.
+    </p>
+
+    <h2>Related Work</h2>
+
+    <p>
+    <table class="table" id="table:ued_methods_summary">
+      <thead>
+        <tr>
+          <th scope="col">Algorithm</th>
+          <th scope="col">Generation strategy</th>
+          <th scope="col">Generator objective</th>
+          <th scope="col">Curator objective</th>
+          <th scope="col">Setting</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>POET</td>
+          <td>Evolution</td>
+          <td>Minimax</td>
+          <td>MCC</td>
+          <td>Population-based</td>
+        </tr>
+        <tr>
+          <td>PAIRED</td>
+          <td>RL</td>
+          <td>Minimax regret</td>
+          <td>None</td>
+          <td>Single agent</td>
+        </tr>
+        <tr>
+          <td>PLR</td>
+          <td>Random</td>
+          <td>None</td>
+          <td>Minimax regret</td>
+          <td>Single agent</td>
+        </tr>
+        <tr id="accel-tr">
+          <td>ACCEL</td>
+          <td>Random + Evolution</td>
+          <td>Minimax regret</td>
+          <td>Minimax regret</td>
+          <td>Single agent</td>
+        </tr>
+      </tbody>
+    </table>
+    <figcaption>Table 1: A summary of various UED methods in terms of their primary components.</figcaption>
+    </p>
+
+    <p>
+    In this section we discuss related work, with a summary of the most closely related methods in <a href="#table:ued_methods_summary">Table 1</a>. Our paper focuses on testing agents on distributions of environments, which has long been known to be crucial to evaluate the generalization capability of RL agents<d-cite bibtex-key="whiteson2009generalized"></d-cite>. The failure of agents in this setting has recently drawn considerable attention<d-cite bibtex-key="packer2019assessing,igl2019generalization, procgen, agarwal2021contrastive, zhang2018generalizationgrid, ghosh2021generalization"></d-cite>, with policies often failing to adapt to changes in the observation<d-cite bibtex-key="observational_overfitting"></d-cite>, dynamics<d-cite bibtex-key="ball2021augwm"></d-cite>, or <nobr>reward<d-cite bibtex-key="zhang2018generalizationcont"></d-cite></nobr>. In this work, we seek to provide agents with a set of training levels to produce a policy that is robust to these variations. 
+    </p>
+
+    <p>
+    In particular, we focus on the unsupervised environment design (UED) paradigm<d-cite bibtex-key="paired"></d-cite>, which shifts from designing agents that can generalize from a fixed distribution of environments towards designing the environments themselves. The most common method for UED is domain Randomization (DR)<d-cite bibtex-key="evolutionary_dr, cad2rl"></d-cite>, which has been particularly successful in areas such as robotics<d-cite bibtex-key="tobin_dr, james2017transferring, dexterity, rubiks_cube"></d-cite>, with extensions proposing to actively update the DR distribution<d-cite bibtex-key="adr2020, adr2_2020"></d-cite>. This paper directly extends Prioritized Level Replay (PLR)<d-cite bibtex-key="plr, jiang2021robustplr"></d-cite>, a method for curating DR levels such that those with high learning potential can be replayed a student agent. PLR is related to TSCL<d-cite bibtex-key="tscl"></d-cite>, self-paced learning<d-cite bibtex-key="selfpace2019klink, space"></d-cite>, and ALP-GMM<d-cite bibtex-key="portelas2019teacher"></d-cite>, which seek to maintain and update distributions over environment parameterizations. It has also been shown that with a smooth task space, a method similar to PLR is capable of producing generally capable agents in a simulated game world<d-cite bibtex-key="xland"></d-cite>.
+    </p>
+
+    <p>
+    Dennis et al, 2020<d-cite bibtex-key="paired"></d-cite> introduced the PAIRED algorithm, an approach for UED whereby an environment adversary optimizes for <i>minimax regret</i><d-cite bibtex-key="minimax_regret"></d-cite>, defined as the difference in performance between an antagonist agent (colluding with the adversary) and the protagonist. This guarantees the adversary produces solvable mazes, which allows the protagonist to transfer to unseen environments and even learn to navigate the web<d-cite bibtex-key="gur2021adversarial"></d-cite>. Adversarial objectives have also been considered in robotics<d-cite bibtex-key="pinto2017advrobotics"></d-cite> and to attack<d-cite bibtex-key="everett2019worlds"></d-cite>. POET<d-cite bibtex-key="poet, enhanced_poet"></d-cite> considers evolving a population of environments, each paired with an agent, using an objective similar to minimax adversarial, which needs to be combined with domain-specific rules to prevent unsolvable environments from being proposed. We take inspiration from the evolutionary nature of POET but train a single agent, which is beneficial as it takes significantly fewer resources, while also removing the agent selection problem. 
+    </p>
+
+    <p>
+    UED is inherently related to the field of Automatic Curriculum Learning (ACL)<d-cite bibtex-key="portelas2020automatic, florensa2017, riac2009"></d-cite>, which seeks to provide a curriculum of increasingly challenging tasks or goals given a (typically) fixed environment<d-cite bibtex-key="her2017"></d-cite>. Asymmetric Self-Play<d-cite bibtex-key="sukhbaatar2018asp"></d-cite> takes the form of one agent proposing goals for another, which was shown to be effective for challenging robotic manipulation tasks<d-cite bibtex-key="openai2021asymmetric"></d-cite>. AMIGo<d-cite bibtex-key="amigo"></d-cite> and APT-Gen<d-cite bibtex-key="fang2021adaptive"></d-cite> provide solutions to problems where the target task is known, providing a curriculum of increasing difficulty. Indeed, many ACL methods emphasize learning to reach goals or states with high uncertainty<d-cite bibtex-key="racaniere2020automated, skewfit2020, frontier_zhang2020"></d-cite>, either using generative<d-cite bibtex-key="goalgan"></d-cite> or world models<d-cite bibtex-key="lexa2021"></d-cite>. Unlike these methods, UED approaches seek to fully specify environments, rather than just goals within a fixed environment. 
+    </p>
+
+    <p>
+    Environment design has been considered in the symbolic AI community as a means to influence an agent's decisions<d-cite bibtex-key="zhang2008ed,zhang2009ed"></d-cite>. This was extended with automated design<d-cite bibtex-key="keren2017equi, keren2019efficient"></d-cite>, which seeks to redesign environments to improve agents. Unlike these works, ACCEL  automatically designs environments to produce a curriculum for a student agent. 
+    </p>
+
+    <p>
+    Our work also relates to the field of procedural content generation (PCG)<d-cite bibtex-key="pcg, pcg_illuminating"></d-cite>, which seeks to produce distributions of levels. Popular PCG environments used in RL include the Procgen Benchmark<d-cite bibtex-key="procgen"></d-cite>, MiniGrid<d-cite bibtex-key="gym_minigrid"></d-cite>, Obstacle Tower<d-cite bibtex-key="obstacletower"></d-cite>, GVGAI<d-cite bibtex-key="perez2019general"></d-cite> and the NetHack Learning Environment<d-cite bibtex-key="kuettler2020nethack"></d-cite>. This work uses the recently proposed MiniHack environment<d-cite bibtex-key="samvelyan2021minihack"></d-cite>, which provides a flexible framework for creating diverse environments. Within the PCG community, automatically generating game levels has been of interest for more than a decade<d-cite bibtex-key="togelius2008evolving"></d-cite>, with recent methods making use of machine learning<d-cite bibtex-key="pcgml, bhaumik2020treesv, pcg"></d-cite>. PCGRL<d-cite bibtex-key="pcgrl,controllablepcgrl2021earle"></d-cite> framed level design as an RL problem, designing environments by making incremental changes. Unlike ACCEL, it makes use of hand-designed dense rewards, and focuses on the design of levels for human players, rather than our emphasis of training a student agent without domain-specific feedback.
+    </p>
+
+    <h2>Conclusion and Future Work</h2>
+
+    <p>
+    In this paper we proposed a new method for Unsupervised Environment Design (UED), ACCEL, which evolves a curriculum by editing previously curated levels. This makes it possible to generate a wide variety of environments at the frontier of the agent's capabilities, producing curricula that start simple and quickly compound. We believe ACCEL offers the best of both worlds: a principled regret-based curriculum that does not require domain-specific heuristics, alongside an evolutionary process that produces a broad spectrum of complexity catering to the agent's current capabilities. In our experiments we showed that ACCEL is capable of training robust agents in a series of challenging design spaces, outperforming competitive baselines. 
+    </p>
+
+    <p>
+    Given the generality of ACCEL, we are particularly excited by possible extensions. Indeed, the editing mechanism could encompass a wide variety of approaches, such as Neural Cellular Automata<d-cite bibtex-key="earle2021illuminating"></d-cite>, using controllable editors<d-cite bibtex-key="controllablepcgrl2021earle"></d-cite>, or perturbing the latent space of a generative model. We did not explore methods to encourage levels to be diverse, but this would likely be important for larger-scale experiments. Another possibility is to actively seek levels which are likely to produce useful levels in the future<d-cite bibtex-key="evolvabilityes">. This could be increased by introducing so-called "extinction events"<d-cite bibtex-key="raup1986biological, lehman2015extinction"></d-cite> which are believed to play a crucial role in natural evolution. Equipped with some of these ideas, we could go significantly further towards open-endedness<d-cite bibtex-key="stanley2017open"></d-cite>. For example, it may be possible to increase the search space such that MiniHack can make broader use of the richness of the NetHack world. Finally, we note that while ACCEL may be an effective approach for automatically generating an effective curriculum, it may be necessary to also adapt the agent<d-cite bibtex-key="autorl_survey"></d-cite> to produce agents that can effectively scale in open-ended environments.
+    </p>
+
+    <h2>Acknowledgements</h2>
+
+    <p>
+    We thank Kenneth Stanley, Alessandro Lazaric, Ian Fox and Iryna Korshunova for useful discussions and feedback on this work, while we are also grateful to anonymous reviewers for their recommendations that helped improve the paper.
+    </p>
+
+
+  </d-article>
+
+  <d-appendix>
+    <d-bibliography src="bibliography.bib"></d-bibliography>
+  </d-appendix>
+
+  <!-- <distill-footer></distill-footer> -->
+
+</body>

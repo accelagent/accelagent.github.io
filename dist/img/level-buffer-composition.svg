@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="320px" height="242px" viewBox="0 0 320 242" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bipedal_poet_progression</title>
+    <defs>
+        <polygon id="path-1" points="0.908498 0.557786 33.991502 0.557786 33.991502 11.1856 0.908498 11.1856"></polygon>
+        <polygon id="path-3" points="0.185178 0.839197 33.268182 0.839197 33.268182 14.1856 0.185178 14.1856"></polygon>
+        <polygon id="path-5" points="0.631818 0.5416 33.714822 0.5416 33.714822 1.0416 0.631818 1.0416"></polygon>
+    </defs>
+    <g id="bipedal_poet_progression" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" x="0" y="0" width="320" height="242"></rect>
+        <polygon id="Fill-2" fill="#FFFFFF" points="39.95 208.969 318.95 208.969 318.95 51.325 39.95 51.325"></polygon>
+        <polygon id="Fill-3" fill="#EE61F4" points="52.631818 208.969 85.714822 208.969 85.714822 177.694236 52.631818 177.694236"></polygon>
+        <polygon id="Fill-5" fill="#EE61F4" points="107.770158 208.969 140.853162 208.969 140.853162 199.377013 107.770158 199.377013"></polygon>
+        <g id="Group-9" transform="translate(162.000000, 197.783400)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Clip-8"></g>
+            <polygon id="Fill-7" fill="#EE61F4" mask="url(#mask-2)" points="0.908498 11.1856 33.991502 11.1856 33.991502 0.557786 0.908498 0.557786"></polygon>
+        </g>
+        <polygon id="Fill-10" fill="#EE61F4" points="218.046838 208.969 251.129842 208.969 251.129842 199.153854 218.046838 199.153854"></polygon>
+        <g id="Group-14" transform="translate(273.000000, 194.783400)">
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <g id="Clip-13"></g>
+            <polygon id="Fill-12" fill="#EE61F4" mask="url(#mask-4)" points="0.185178 14.1856 33.268182 14.1856 33.268182 0.839197 0.185178 0.839197"></polygon>
+        </g>
+        <polygon id="Fill-15" fill="#38A9C1" points="52.631818 177.694236 85.714822 177.694236 85.714822 72.190165 52.631818 72.190165"></polygon>
+        <polygon id="Fill-17" fill="#38A9C1" points="107.770158 199.377013 140.853162 199.377013 140.853162 122.400205 107.770158 122.400205"></polygon>
+        <polygon id="Fill-19" fill="#38A9C1" points="162.908498 198.341186 195.991502 198.341186 195.991502 115.38269 162.908498 115.38269"></polygon>
+        <polygon id="Fill-21" fill="#38A9C1" points="218.046838 199.153854 251.129842 199.153854 251.129842 107.990203 218.046838 107.990203"></polygon>
+        <polygon id="Fill-23" fill="#38A9C1" points="273.185178 195.622597 306.268182 195.622597 306.268182 99.276616 273.185178 99.276616"></polygon>
+        <polygon id="Fill-25" fill="#E28532" points="52.631818 72.190165 85.714822 72.190165 85.714822 51.325 52.631818 51.325"></polygon>
+        <polygon id="Fill-27" fill="#E28532" points="107.770158 122.400205 140.853162 122.400205 140.853162 57.264943 107.770158 57.264943"></polygon>
+        <polygon id="Fill-29" fill="#E28532" points="162.908498 115.38269 195.991502 115.38269 195.991502 59.128971 162.908498 59.128971"></polygon>
+        <polygon id="Fill-31" fill="#E28532" points="218.046838 107.990203 251.129842 107.990203 251.129842 60.206005 218.046838 60.206005"></polygon>
+        <polygon id="Fill-33" fill="#E28532" points="273.185178 99.276616 306.268182 99.276616 306.268182 61.738714 273.185178 61.738714"></polygon>
+        <g id="Group-37" transform="translate(52.000000, 50.783400)">
+            <mask id="mask-6" fill="white">
+                <use xlink:href="#path-5"></use>
+            </mask>
+            <g id="Clip-36"></g>
+            <polygon id="Fill-35" fill="#42B231" mask="url(#mask-6)" points="0.631818 0.5416 33.714822 0.5416 33.714822 0.5416"></polygon>
+        </g>
+        <polygon id="Fill-38" fill="#42B231" points="107.770158 57.264943 140.853162 57.264943 140.853162 51.325 107.770158 51.325"></polygon>
+        <polygon id="Fill-40" fill="#42B231" points="162.908498 59.128971 195.991502 59.128971 195.991502 51.325 162.908498 51.325"></polygon>
+        <polygon id="Fill-42" fill="#42B231" points="218.046838 60.206005 251.129842 60.206005 251.129842 51.325 218.046838 51.325"></polygon>
+        <polygon id="Fill-44" fill="#42B231" points="273.185178 61.738714 306.268182 61.738714 306.268182 51.325 273.185178 51.325"></polygon>
+        <g id="Group-74" transform="translate(-3.000000, -2.216600)">
+            <line x1="72.17332" y1="211.1856" x2="72.17332" y2="214.6856" id="Fill-46" fill="#000000"></line>
+            <line x1="72.17332" y1="211.1856" x2="72.17332" y2="214.6856" id="Stroke-47" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="10000" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="56.2748827" y="224.002006">10000</tspan>
+            </text>
+            <line x1="127.31166" y1="211.1856" x2="127.31166" y2="214.6856" id="Fill-48" fill="#000000"></line>
+            <line x1="127.31166" y1="211.1856" x2="127.31166" y2="214.6856" id="Stroke-49" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="20000" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="111.413223" y="224.002006">20000</tspan>
+            </text>
+            <line x1="182.45" y1="211.1856" x2="182.45" y2="214.6856" id="Fill-50" fill="#000000"></line>
+            <line x1="182.45" y1="211.1856" x2="182.45" y2="214.6856" id="Stroke-51" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="30000" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="166.551563" y="224.002006">30000</tspan>
+            </text>
+            <line x1="237.58834" y1="211.1856" x2="237.58834" y2="214.6856" id="Fill-52" fill="#000000"></line>
+            <line x1="237.58834" y1="211.1856" x2="237.58834" y2="214.6856" id="Stroke-53" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="40000" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="221.689902" y="224.002006">40000</tspan>
+            </text>
+            <line x1="292.72668" y1="211.1856" x2="292.72668" y2="214.6856" id="Fill-54" fill="#000000"></line>
+            <line x1="292.72668" y1="211.1856" x2="292.72668" y2="214.6856" id="Stroke-55" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="50000" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="276.828242" y="224.002006">50000</tspan>
+            </text>
+            <line x1="42.95" y1="211.1856" x2="39.45" y2="211.1856" id="Fill-56" fill="#000000"></line>
+            <line x1="42.95" y1="211.1856" x2="39.45" y2="211.1856" id="Stroke-57" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="0" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="33.790625" y="214.305131">0</tspan>
+            </text>
+            <line x1="42.95" y1="179.6568" x2="39.45" y2="179.6568" id="Fill-58" fill="#000000"></line>
+            <line x1="42.95" y1="179.6568" x2="39.45" y2="179.6568" id="Stroke-59" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="20" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="27.43125" y="182.776331">20</tspan>
+            </text>
+            <line x1="42.95" y1="148.128" x2="39.45" y2="148.128" id="Fill-60" fill="#000000"></line>
+            <line x1="42.95" y1="148.128" x2="39.45" y2="148.128" id="Stroke-61" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="40" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="27.43125" y="151.247531">40</tspan>
+            </text>
+            <line x1="42.95" y1="116.5992" x2="39.45" y2="116.5992" id="Fill-62" fill="#000000"></line>
+            <line x1="42.95" y1="116.5992" x2="39.45" y2="116.5992" id="Stroke-63" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="60" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="27.43125" y="119.718731">60</tspan>
+            </text>
+            <line x1="42.95" y1="85.0704" x2="39.45" y2="85.0704" id="Fill-64" fill="#000000"></line>
+            <line x1="42.95" y1="85.0704" x2="39.45" y2="85.0704" id="Stroke-65" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="80" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="27.43125" y="88.1899313">80</tspan>
+            </text>
+            <line x1="42.95" y1="53.5416" x2="39.45" y2="53.5416" id="Fill-66" fill="#000000"></line>
+            <line x1="42.95" y1="53.5416" x2="39.45" y2="53.5416" id="Stroke-67" stroke="#000000" stroke-width="0.8" stroke-linejoin="round"></line>
+            <text id="100" font-family="ArialMT, Arial" font-size="10" font-weight="normal" fill="#000000">
+                <tspan x="21.071875" y="56.6611312">100</tspan>
+            </text>
+            <line x1="42.95" y1="211.1856" x2="42.95" y2="53.5416" id="Stroke-68" stroke="#000000" stroke-width="0.8" stroke-linecap="square"></line>
+            <line x1="42.95" y1="211.1856" x2="321.95" y2="211.1856" id="Stroke-69" stroke="#000000" stroke-width="0.8" stroke-linecap="square"></line>
+            <text id="Student-PPO-updates" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#000000">
+                <tspan x="116.801563" y="240.508787">Student PPO updates</tspan>
+            </text>
+            <g id="legend" transform="translate(37.264062, 0.742187)">
+                <polygon id="Fill-70" fill="#EE61F4" points="0 12.1328125 24 12.1328125 24 3.7328125 0 3.7328125"></polygon>
+                <text id="Easy" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="33.6000005" y="11">Easy</tspan>
+                </text>
+                <polygon id="Fill-71" fill="#38A9C1" points="0 29.7578125 24 29.7578125 24 21.3578125 0 21.3578125"></polygon>
+                <text id="Challenging" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="33.6000005" y="28.625">Challenging</tspan>
+                </text>
+                <polygon id="Fill-72" fill="#E28532" points="128.7875 12.1328125 152.7875 12.1328125 152.7875 3.7328125 128.7875 3.7328125"></polygon>
+                <text id="Very-Challenging" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="162.3875" y="11">Very Challenging</tspan>
+                </text>
+                <polygon id="Fill-73" fill="#42B231" points="128.7875 29.7578125 152.7875 29.7578125 152.7875 21.3578125 128.7875 21.3578125"></polygon>
+                <text id="Extremely-Challenging" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="162.3875" y="28.625">Extremely Challenging</tspan>
+                </text>
+            </g>
+            <text id="Percent-of-level-rep" transform="translate(8.787100, 131.589049) rotate(-90.000000) translate(-8.787100, -131.589049) " font-family="ArialMT, Arial" font-size="14" font-weight="normal" fill="#000000">
+                <tspan x="-80.2129002" y="136.589049">Percent of level replay buffer</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
