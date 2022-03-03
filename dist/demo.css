@@ -336,6 +336,7 @@ input[type=range] {
 }
 
 .accel-maze-video-container {
+    display: flex;
     gap: 24px;
 }
 .accel-maze-video {
@@ -376,4 +377,81 @@ video#bipedal-level-evolution {
 
 .paper-link {
     color: #ff8300;
+}
+
+/* Media queries */
+
+@media(max-width: 1024px) {
+    .accel-lavagrid-video {
+        width: 100px;
+        height: 100px;   
+    }
+
+    .accel-lavagrid-video-container {
+        justify-content:space-between;
+    }
+
+    .accel-maze-video-container {
+        align-items: center;
+    }
+}
+
+@media(max-width: 1200px) {
+    #radar-chart {
+        display: none;
+    }
+
+    #agents-menu-container {
+        width: 65%;
+    }
+}
+
+@media(max-width: 470px) {
+    #env-control-panel {
+        flex-direction: column;
+    }
+
+    #agents-menu-container {
+        width: 100%;
+    }
+
+    ul#env-controls {
+        width: 100%;
+    }
+
+    input[type="range"].multirange, input[type="range"].multirange {
+        width: 80%;
+    }
+}
+
+@media(max-width: 520px) {
+    .accel-maze-video {
+        width: 160px;
+        height: 160px;
+    }
+
+    .accel-lavagrid-video {
+        width: 80px;
+        height: 80px;   
+    }
+
+    #accel-algo {
+        height: 360px;
+    }
+
+    .accel-maze-video-container {
+        flex-direction: column;
+    }
+}
+
+@media(max-width: 360px) {
+    .accel-lavagrid-video-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .accel-maze-video {
+        width: 160px;
+        height: 160px;
+    }
 }
