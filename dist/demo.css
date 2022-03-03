@@ -12,7 +12,12 @@ ul > li {
 }
 
 #cover d-title {
+    position: absolute;
+    display: absolute;
+    left: 0;
+    right: 0;
     padding: 14rem 0 0 0;
+    z-index: 3;
 }
 
 #creepers{
@@ -22,13 +27,31 @@ ul > li {
 
 #cover {
     /*display: flex;*/
-    background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("img/accel_bipedal_cover.gif");
-    background:linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("img/accel_bipedal_cover.gif");
+    position: relative;
     background-size: cover;
     color: black;
     width: 100%;
     height: 100%;
     min-height: 420px;
+}
+
+#cover-video {
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    object-fit: cover;
+    object-position: 0% 0%;
+    z-index: 1;
+}
+
+#cover-video-tint {
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    z-index: 2;
+
+    background: white;
+    opacity: 0.5;
 }
 
 .btn-asset{
@@ -436,7 +459,7 @@ video#bipedal-level-evolution {
     }
 
     #accel-algo {
-        height: 360px;
+        height: 342px;
     }
 
     .accel-maze-video-container {
@@ -454,4 +477,16 @@ video#bipedal-level-evolution {
         width: 160px;
         height: 160px;
     }
+}
+
+@media(max-width: 400px) {
+    #cover d-title {
+        padding: 12rem 0 0 0;
+    } 
+}
+
+@media(max-width: 320px) {
+    #cover d-title {
+        padding: 5rem 0 0 0;
+    } 
 }
