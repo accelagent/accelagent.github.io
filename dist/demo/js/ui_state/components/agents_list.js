@@ -23,46 +23,50 @@ export default class AgentsList extends Component {
         let morph_dict = window.lang_dict[store.state.language]['morphologies'];
         this.element.querySelector('#agents_list_title').innerHTML = `<strong>${dict['title']}</strong>`;
         this.element.querySelector('#agents_list').innerHTML = store.state.agents.map(agent => {
-            let age = agent.age == "adult" ? "" : " (" + window.lang_dict[window.get_language()]['morphologies'][agent.age] + ")";
-            // Creates a list item for each agent
-            return `<li name="agent-list-item" class="list-group-item d-flex justify-content-between align-items-center px-0 py-1">
+            if (agent.seed == 0) {
+                // Creates a list item for each agent
+                return `<li name="agent-list-item" class="list-group-item d-flex justify-content-between align-items-center px-0 py-1">
 
-                    <!-- Thumbnail of the morphology -->
-                    <img src=${thumbnails_path + agent.morphology + "_thumbnail.png"} 
-                             alt=${agent.morphology + "_thumbnail"}
-                             width="8%"
-                             class="mx-1"
-                             data-bs-toggle="tooltip" title=${morph_dict[agent.morphology]['title']}>
-                             
-                    <!-- Text field of the name of the agent -->
-                    <div class="form-group">
-                        <input name="agentNameArea" type="text" class="form-control w-75 mx-1" placeholder="${agent.name + age}">
-                    </div>
-                    
-                    <!-- Follow switch -->         
-                    <label class="form-check-label" for="followSwitch">${dict['follow']}</label>         
-                    <div class="form-check form-switch mx-1">
-                        <input name="followSwitch" class="form-check-input" type="checkbox" data-bs-toggle="tooltip" title="${dict['followTooltip']}">
-                    </div>
+                        <!-- Thumbnail of the morphology -->
+                        <img src=${thumbnails_path + agent.morphology + "_thumbnail.png"} 
+                                 alt=${agent.morphology + "_thumbnail"}
+                                 width="8%"
+                                 class="mx-1"
+                                 data-bs-toggle="tooltip" title=${morph_dict[agent.morphology]['title']}>
+                                 
+                        <!-- Text field of the name of the agent -->
+                        <div class="form-group">
+                            <input name="agentNameArea" type="text" class="form-control w-75 mx-1" placeholder="${agent.name + age}">
+                        </div>
+                        
+                        <!-- Follow switch -->         
+                        <label class="form-check-label" for="followSwitch">${dict['follow']}</label>         
+                        <div class="form-check form-switch mx-1">
+                            <input name="followSwitch" class="form-check-input" type="checkbox" data-bs-toggle="tooltip" title="${dict['followTooltip']}">
+                        </div>
 
-                    <!-- Save and reset position buttons -->
-                    <div name="positionButtonsGroup" class="btn-group" role="group">
-                        <button name="savePositionButton" type="button" class="btn btn-primary btn-sm" 
-                        data-bs-toggle="tooltip" title="${dict['savePosTooltip']}">
-                            <i class="far fa-save fa-lg"></i>
+                        <!-- Save and reset position buttons -->
+                        <div name="positionButtonsGroup" class="btn-group" role="group">
+                            <button name="savePositionButton" type="button" class="btn btn-primary btn-sm" 
+                            data-bs-toggle="tooltip" title="${dict['savePosTooltip']}">
+                                <i class="far fa-save fa-lg"></i>
+                            </button>
+                            <button name="resetPositionButton" type="button" class="btn btn-primary btn-sm"
+                            data-bs-toggle="tooltip" title="${dict['resetPosTooltip']}">
+                                <i class="fas fa-undo-alt"></i>
+                            </button> 
+                        </div>
+                        
+                        <!-- Delete button -->
+                        <button name="deleteButton" type="button" class="btn btn-danger btn-sm mx-1"
+                        data-bs-toggle="tooltip" title="${dict['deleteAgentTooltip']}">
+                            <i class="fa fa-trash"></i>
                         </button>
-                        <button name="resetPositionButton" type="button" class="btn btn-primary btn-sm"
-                        data-bs-toggle="tooltip" title="${dict['resetPosTooltip']}">
-                            <i class="fas fa-undo-alt"></i>
-                        </button> 
-                    </div>
-                    
-                    <!-- Delete button -->
-                    <button name="deleteButton" type="button" class="btn btn-danger btn-sm mx-1"
-                    data-bs-toggle="tooltip" title="${dict['deleteAgentTooltip']}">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </li>`;
+                    </li>`;
+                }
+            else {
+                return '';
+            }
         }).join('');
 
         // Renders the list items differently when drawing or if the agent is selected

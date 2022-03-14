@@ -1,5 +1,4 @@
 import store from './ui_state/store/index.js';
-import MorphologiesList from './ui_state/components/morphologies_list.js';
 import AgentsList from './ui_state/components/agents_list.js';
 import AgentsMenu from './ui_state/components/agents_menu.js';
 import MainButtons from './ui_state/components/main_buttons.js';
@@ -46,63 +45,6 @@ window.closeModal = (modal) => {
     });
 }
 
-// Save env modal setup
-// const saveEnvModal = document.querySelector('#saveEnvModal');
-// saveEnvModal.querySelectorAll('.btn').forEach((span, index) => {
-//     span.addEventListener('click', () => {
-
-//         // If the confirm button is clicked
-//         if(span.getAttribute('id') == "save-confirm-btn"){
-
-//             // Gets the name and description values
-//             let name = saveEnvModal.querySelector('#env-name').value;
-//             if(name == ""){
-//                 name = "Custom Environment " + store.state.envsSets.customEnvsSet.length;
-//             }
-//             let description = saveEnvModal.querySelector('#env-description').value;
-
-//             // Saves the current position of the agents
-//             for(let i = 0; i < store.state.agents.length; i++){
-//                 store.dispatch('setAgentInitPos', {index: i, init_pos: window.game.env.agents[i].agent_body.reference_head_object.GetPosition().Clone()});
-//             }
-
-//             // Adjusts the zoom and scroll to capture the thumbnail
-//             let previous_zoom = window.game.env.zoom;
-//             let previous_scroll = [...window.game.env.scroll];
-//             window.game.env.set_zoom(THUMBNAIL_ZOOM);
-//             window.game.env.set_scroll(null, THUMBNAIL_SCROLL_X, 0);
-//             window.game.env.render();
-
-//             // Creates the state of the current env
-//             let env = {
-//                 terrain: {
-//                     ground: [...window.ground],
-//                     ceiling: [...window.ceiling],
-//                     parkourConfig: Object.assign({}, store.state.parkourConfig.terrain),
-//                     creepersConfig: Object.assign({}, store.state.parkourConfig.creepers)
-//                 },
-//                 agents: [...store.state.agents],
-//                 description: {
-//                     name: name,
-//                     text: description
-//                 },
-//                 // Captures the canvas to create the thumbnail of the env
-//                 image: window.canvas.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
-//             };
-
-//             // Adds the env to the custom set
-//             store.dispatch('addEnv',{set: 'custom', env: env});
-
-//             // Sets back the zoom and scroll to the previous values
-//             window.game.env.set_zoom(previous_zoom);
-//             window.game.env.set_scroll(null, previous_scroll[0], previous_scroll[1]);
-//             window.game.env.render();
-//         }
-
-//         closeModal(saveEnvModal);
-//     });
-// });
-
 // Main buttons setup
 const runButton = document.querySelector("#runButton");
 runButton.addEventListener('click', () => {
@@ -125,20 +67,9 @@ const resetButton = document.querySelector("#resetButton");
 resetButton.addEventListener('click', () => {
     store.dispatch('resetSimulation', {});
 });
-// const saveEnvButton = document.querySelector('#saveEnvButton');
-// saveEnvButton.addEventListener('click', () => {
-//     openModal(saveEnvModal);
-// });
+
 const mainButtonsInstance = new MainButtons();
 mainButtonsInstance.render();
-
-// Morphologies list setup
-// const morphologiesListInstance = new MorphologiesList();
-// morphologiesListInstance.render();
-
-// Agents list setup
-// const agentListInstance = new AgentsList();
-// agentListInstance.render();
 
 // Agent selector setup
 const agentsMenuInstance = new AgentsMenu();
@@ -203,7 +134,6 @@ cfg = chart.config();
 function updateRadarChart(data) {
   var game = svg.selectAll('g.game').data(
     [
-      // randomDataset(),
       data,
     ]
   );
@@ -268,6 +198,13 @@ pitGapSlider.nextElementSibling.addEventListener('input', handleEnvConfigRangeUp
 const stairStepsSlider = document.querySelector("#stair-steps-slider");
 stairStepsSlider.addEventListener('input', handleEnvConfigRangeUpdate.bind(null,"stair_steps"))
 stairStepsSlider.nextElementSibling.addEventListener('input', handleEnvConfigRangeUpdate.bind(null,"stair_steps"));
+
+
+document.querySelector("input[name=auxAgentsSwitch]").addEventListener('input', (event) => {
+        let target = event.target;
+        store.dispatch('showAuxAgents', {show: target.checked});
+        target.checked = store.state.simulationState.showAuxAgents;
+    });
 
 /*
  * Fetches the available morphologies and policies from the JSON file

@@ -2098,7 +2098,7 @@ d-appendix > distill-appendix {
         </p>
         <p class="affiliation">
         ${author.affiliations.map(affiliation =>
-          affiliation.url ? `<a class="affiliation" href="${affiliation.url}">${affiliation.name}</a>` : `<span class="affiliation">${affiliation.name}</span>`
+          affiliation.url ? `<a class="affiliation" target="__blank" href="${affiliation.url}">${affiliation.name}</a>` : `<span class="affiliation">${affiliation.name}</span>`
         ).join(', ')}
         </p>
       `).join('')}

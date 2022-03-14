@@ -41,7 +41,7 @@ def get_seed_name(seed_path: Path):
     return name.strip('\n')
 
 if __name__ == "__main__":
-    policy_list = collect_policies(Path('policy_models'))
+    policy_list = collect_policies(Path('policy_models_staging_all_seeds'))
     print(policy_list)
-    with open("dist/policies.json", "w") as write_file:
+    with open("dist/policies2.json", "w") as write_file:
         json.dump(policy_list, write_file)

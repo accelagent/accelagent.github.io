@@ -29,33 +29,38 @@ export default class AgentsMenu extends Component {
         let dict = window.lang_dict[store.state.language]['agentsList'];
         let morph_dict = window.lang_dict[store.state.language]['morphologies'];
         this.element.querySelector('#agents-menu').innerHTML = store.state.agents.map(agent => {
-            // Creates a list item for each agent
-            return `<li class="agents-menu-item" name="agents-menu-item">
+            if (agent.seed == 0) {
+                // Creates a list item for each agent
+                return `<li class="agents-menu-item" name="agents-menu-item">
 
-                    <div class="agent-description">
-                        <img src=${thumbnails_path + agent.name + "_avatar.png"}
-                                 class="agent-avatar">
-                        <div class="agent-label">${RENDERED_AGENT_NAMES[agent.name]}</div>
-                    </div>
+                        <div class="agent-description">
+                            <img src=${thumbnails_path + agent.name + "_avatar.png"}
+                                     class="agent-avatar">
+                            <div class="agent-label">${RENDERED_AGENT_NAMES[agent.name]}</div>
+                        </div>
 
-                    <!-- Select agent checkbox -->
-                    <div class="agent-render-controls">
-                        <div class="checkbox-container">
-                            <label class="form-check-label" for="agentSwitch">Show</label>         
-                            <div class="form-check form-switch mx-1">
-                                <input name="renderSwitch" class="form-check-input" type="checkbox"">
+                        <!-- Select agent checkbox -->
+                        <div class="agent-render-controls">
+                            <div class="checkbox-container">
+                                <label class="form-check-label" for="agentSwitch">Show</label>         
+                                <div class="form-check form-switch mx-1">
+                                    <input name="renderSwitch" class="form-check-input" type="checkbox"">
+                                </div>
+                            </div>
+                            
+                            <!-- Follow switch -->   
+                            <div class="checkbox-container">      
+                                <label class="form-check-label" for="followSwitch">Follow</label>         
+                                <div class="form-check form-switch mx-1">
+                                    <input name="followSwitch" class="form-check-input" type="checkbox"">
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Follow switch -->   
-                        <div class="checkbox-container">      
-                            <label class="form-check-label" for="followSwitch">Follow</label>         
-                            <div class="form-check form-switch mx-1">
-                                <input name="followSwitch" class="form-check-input" type="checkbox"">
-                            </div>
-                        </div>
-                    </div>
-                </li>`;
+                    </li>`;
+            }
+            else {
+                return '';
+            }
         }).join('');
 
         // Renders the list items differently when drawing or if the agent is selected

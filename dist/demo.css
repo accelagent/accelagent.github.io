@@ -212,7 +212,17 @@ button {
 }
 
 #env-buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#env-main-buttons-container {
     display:  flex;
+}
+
+#env-buttons-container .form-switch {
+    display: flex;
+    align-items: center;
 }
 
 #env-buttons-container button {
@@ -250,7 +260,6 @@ button {
     background-color: red;
     border: 1px solid red;
 }
-
 
 
 /* Radar chart */

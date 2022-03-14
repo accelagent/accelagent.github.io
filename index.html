@@ -18,9 +18,9 @@
 <head>
   <title>Evolving Curricula</title>
   <script>
-    console.log = function() {};/
-    console.groupCollapsed = function() {};
-    console.debug = function() {};
+    // console.log = function() {};
+    // console.groupCollapsed = function() {};
+    // console.debug = function() {};
   </script>
   <script src="dist/template.v2.js"></script>
 
@@ -226,11 +226,16 @@
 
         <!-- Run/reset buttons -->
         <div id="env-buttons-container">
-          <div class="col-auto py-2 px-1">
-              <button id="runButton" class="btn btn-success" title="Run the simulation"><span class="fas fa-play">Run</span></button>
-          </div>
-          <div class="col-auto py-2 px-1">
-              <button id="resetButton" class="btn btn-danger" title="Reset the simulation"><span class="fas fa-undo-alt fa-lg">Reset</span></button>
+          <div id="env-main-buttons-container">
+            <div class="col-auto py-2 px-1">
+                <button id="runButton" class="btn btn-success" title="Run the simulation"><span class="fas fa-play">Run</span></button>
+            </div>
+            <div class="col-auto py-2 px-1">
+                <button id="resetButton" class="btn btn-danger" title="Reset the simulation"><span class="fas fa-undo-alt fa-lg">Reset</span></button>
+            </div>
+            <div class="form-check form-switch mx-1">
+                <input name="auxAgentsSwitch" class="form-check-input" type="checkbox">Show all seeds</input>
+            </div>
           </div>
         </div>
       </div>

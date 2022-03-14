@@ -6,6 +6,7 @@ export default {
         customEnvsSet: [] // list of environments of the custom set
     },
     morphologies: [], // list of available morphologies
+    name2agents: {},
     currentSeedsIdx: {}, // index of the policy selected for each morphology
     agents: [], // list of running agents
     simulationState: {

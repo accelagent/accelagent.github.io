@@ -42,21 +42,7 @@ export default {
         for(let param in payload.terrain.creepersConfig){
             context.commit('updateParkourConfig', {name: param, value: payload.terrain.creepersConfig[param]});
         }
-
-        // Replaces previous agents by the ones of the env
-        // while (context.state.agents.length > 0){
-        //     context.commit('deleteAgent', {index: 0});
-        // }
-        // for(let agent of payload.agents){
-        //     context.commit('addAgent', {
-        //         morphology: agent.morphology,
-        //         name: agent.name,
-        //         age: agent.age,
-        //         path: agent.path,
-        //         init_pos: agent.init_pos
-        //     });
-        // }
-
+        
         // Initializes the new environment
         context.commit('init_default', {}); 
     },
@@ -231,6 +217,10 @@ export default {
      */
     followAgent(context, payload) {
         context.commit('followAgent', payload);
+    },
+
+    showAuxAgents(context, payload) {
+        context.commit('showAuxAgents', payload);
     },
 
     /**
