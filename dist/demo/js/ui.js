@@ -352,9 +352,9 @@ window.set_agent_followed = (index) => {
  * Handles agent deletion.
  * @param agent {Object} - Agent to delete
  */
-window.delete_agent = (agent) => {
-    store.dispatch('deleteAgent', {index: window.game.env.agents.indexOf(agent)});
-}
+// window.delete_agent = (agent) => {
+//     store.dispatch('deleteAgent', {index: window.game.env.agents.indexOf(agent)});
+// }
 
 /**
  * Returns the current language.

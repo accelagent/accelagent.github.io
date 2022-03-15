@@ -119,7 +119,7 @@ class MultiAgentsContinuousParkour {
 
         // Creates the agents
         this.agents = [];
-        console.assert(agents.morphologies.length == agents.policies.length && agents.morphologies.length == agents.positions.length);
+        // console.assert(agents.morphologies.length == agents.policies.length && agents.morphologies.length == agents.positions.length);
         for(let i = 0; i < agents.morphologies.length; i++){
             if(!agents.hasOwnProperty('visible')) {
                 agents.visible = Array(agents.length).fill(true);
@@ -1393,22 +1393,51 @@ class MultiAgentsContinuousParkour {
      * @param agent_index {number}
      */
     delete_agent(agent_index){
-        if(this.agents.length > 0 && agent_index < this.agents.length){
+        if (!Array.isArray(agent_index)) {
+            agent_index = [agent_index,];
+        }   
 
-            // Removes the agent from the list and destroys its body
-            let agent = this.agents[agent_index];
-            this.agents.splice(agent_index, 1);
-            agent.agent_body.destroy(this.world);
-
-            // Adjusts the id of the other agents
-            for(let i = 0; i < this.agents.length; i++){
-                this.agents[i].id = i;
+        let updated_agents = [];
+        let updated_game_obs = [];
+        let updated_game_rewards = [];
+        for(let i=0; i < agent_index.length; i++) {
+            if (i >= this.agents.length) {
+                continue;
             }
 
-            // Removes the observation of this agent from the list of observations.
-            window.game.obs[window.game.obs.length - 1].splice(agent_index, 1);
-            window.game.rewards[window.game.rewards.length - 1].splice(agent_index, 1);
+            let agent = this.agents[i];
+            if (agent_index.includes(i)) {
+                // remove the agent
+                agent.agent_body.destroy(this.world);
+            }
+            else {
+                updated_agents.push(agent);
+                updated_game_obs.push(window.game.obs[i]);
+                updated_game_rewards.push(window.game.rewards[i]);
+            }
         }
+
+        this.agents = updated_agents;
+
+        for(let i = 0; i < this.agents.length; i++){
+            this.agents[i].id = i;
+        }
+        // if(this.agents.length > 0 && agent_index < this.agents.length){
+
+        //     // Removes the agent from the list and destroys its body
+        //     let agent = this.agents[agent_index];
+        //     this.agents.splice(agent_index, 1);
+        //     agent.agent_body.destroy(this.world);
+
+        //     // Adjusts the id of the other agents
+        //     for(let i = 0; i < this.agents.length; i++){
+        //         this.agents[i].id = i;
+        //     }
+
+        //     // Removes the observation of this agent from the list of observations.
+        //     window.game.obs[window.game.obs.length - 1].splice(agent_index, 1);
+        //     window.game.rewards[window.game.rewards.length - 1].splice(agent_index, 1);
+        // }
     }
 
     delete_all_agents() {

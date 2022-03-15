@@ -200,11 +200,11 @@ export default {
         }
         // Gets the initial position of each agent
         else {
-            let agent_name2index = this.visibleAgentName2Index(state);
+            let agent_name2index = this.agentName2VisibleIndex(state)[0];
             agents.positions = [...activeAgents.map((agent, index) => {
                 let visible_index = agent_name2index[agent.name];
                 if(agent.visible && visible_index.includes(index)) {
-                    window.game.env.agents[visible_index].init_pos;
+                    window.game.env.agents[index].init_pos;
                 }
             })];
         }
@@ -242,7 +242,29 @@ export default {
         return state;
     },
 
-    visibleAgentName2Index(state) {
+
+    sortAgents(state) {
+        // sort the agents in state
+        return state;
+    },
+
+    agentExists(agent) {
+        if(agent == null) {
+            return false;
+        }
+
+        for(let i=0; i < window.game.env.agents.length; i++) {
+            let game_agent = window.game.env.agents[i]
+            if(game_agent.name == agent.name && game_agent.seed == agent.seed) {
+                return true
+            }
+        }
+        return false;
+    },
+
+    agentName2VisibleIndex(state) {
+        // Returns the index of visible agents by name in the game environment
+
         let name2index_window = {}
         let name2index = {}
 
@@ -263,35 +285,29 @@ export default {
             name2index[agent.name] = agent.name in name2index_window ? name2index_window[agent.name] : null;
         }
 
-        return name2index;
+        return [name2index, name2index_window];
     },
 
     showAuxAgents(state) {
         let showAuxAgents = state.simulationState.showAuxAgents;
         state.simulationState.showAuxAgents = !showAuxAgents;
-        return state;
-    },
 
-    sortAgents(state) {
-        // sort the agents in state
-        return state;
-    },
+        let num_agent_names = Object.entries(state.name2agents).length;
 
-    agentExists(agent, seed=0) {
-        if(agent == null) {
-            return false;
-        }
-
-        let name = agent.name;
-        for(let i=0; i < window.game.env.agents.length; i++) {
-            game_agent = window.game.env.agents[i]
-            if(game_agent.name == name && game_agent.seed == seed) {
-                return true
+        for (let i=0; i < num_agent_names; i++) {
+            if (state.simulationState.showAuxAgents) { // Add agents
+                state = this.addAgent(state, {'index': i, 'aux_only': true});
+            }
+            else { // Remove agents
+                state = this.deleteAgent(state, {'index': i, 'keep': true, 'aux_only': true});
             }
         }
-        return false;
-    },
 
+        // Reset the simulation
+        state = this.resetSimulation(state, {'keepPositions':false});
+
+        return state;
+    },
 
     /**
      * Adds the given agent to the environment and renders it.
@@ -312,16 +328,19 @@ export default {
             init_pos = payload.init_pos;
         }
         else if (payload.index < num_agent_names) {
-            let agents = name_agent_lists[payload.index]
+            let agents = name_agent_lists[payload.index][1]
 
             agents[0].visible = true;
-            morphology = agent.morphology;
-            addAgentToGame(agents[0], morphology, init_pos);
+            morphology = agents[0].morphology;
 
-            if (state.simulationState.showAuxAgents) {
+            if (!payload.aux_only) {
+                this.addAgentToGame(agents[0], morphology, init_pos);
+            }
+
+            if (state.simulationState.showAuxAgents) { // Add agents for additional seeds
                 for (let i=1; i<agents.length; i++) {
                     agents[i].visible = true;
-                    addAgentToGame(agents[i], morphology, init_pos);
+                    this.addAgentToGame(agents[i], morphology, init_pos);
                 }   
             }
         }
@@ -348,25 +367,42 @@ export default {
      * @return {Object} - UI state
      */
     deleteAgent(state, payload) {
-        let index_window = null;
+        let agent_name = Object.entries(state.name2agents)[payload.index][0]
+        let agent_all_index = this.agentName2VisibleIndex(state);
+        let agent_visible_index = agent_all_index[0][agent_name]
+        let agent_index = agent_all_index[1][agent_name]
 
-        let agent_name2index = this.visibleAgentName2Index(state);
-        let agent = state.agents[payload.index];
-        let visible_index = agent_name2index[agent.name];
+        if (payload.aux_only) { // Remove main agent index
+            if (agent_visible_index) {
+                agent_visible_index.splice(agent_visible_index.indexOf(0), 1);
+            }
+            agent_index.splice(agent_index.indexOf(0), 1);
+        }
 
         if(payload.hasOwnProperty('keep')) {
-            state.agents[payload.index].visible = false;
+            // Sets all agents with the matching name as agent at index to true
+            for (let i=0; i < agent_index.length; i++) {
+                state.agents[agent_index[i]].visible = false;
+            }
         }
         else {
-            // @TODO: Need to remove all agents matching this set, using filter
-            state.agents.splice(payload.index, 1);
+            let updated_agents = [];
+            for (let i=0; i < state.agents.length; i++) {
+                if (!agent_index.includes(i)) {
+                    updated_agents.push(state.agents[agent_index[i]])
+                }
+            }
+            state.agents = updated_agents;
         }
 
         state = this.sortAgents(state);
 
         if(window.game != null){
             // @TODO: Need to remove all agents matching this set, using filter
-            window.game.env.delete_agent(visible_index);
+            for (let i=0; i < agent_visible_index.length; i++) {
+                window.game.env.delete_agent(i);
+            }
+            
             window.game.env.render();
         }
 
