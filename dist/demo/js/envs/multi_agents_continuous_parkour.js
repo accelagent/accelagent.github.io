@@ -902,58 +902,6 @@ class MultiAgentsContinuousParkour {
         /* DRAWING GENERATION: generates the terrain from the ground and ceiling arrays of points */
         if(window.is_drawing() || ground.length > 0 || ceiling.length > 0){
             console.log('Called drawing generation...')
-            // Creates ground terrain
-            // if(ground.length > 0){
-            //     // Handles smoothing and alignment of the ground with the startpad
-            //     let ground_y_offset = 0;
-            //     if(this.align_terrain.align && this.align_terrain.smoothing != null){
-
-            //         // Applies the smoothing as the ratio: current smoothing / previous smoothing
-            //         ground = [...ground.map(p => {
-            //             return {x: p.x, y: p.y / (this.TERRAIN_CPPN_SCALE / this.align_terrain.smoothing)};
-            //         })];
-
-            //         // Aligns the ground with the startpad
-            //         if(this.align_terrain.ground_offset == null){
-            //             ground_y_offset = TERRAIN_HEIGHT - ground[0].y;
-            //         }
-            //         // Keeps the same ground alignment (adjusted to fit the smoothing)
-            //         else{
-            //             ground_y_offset = this.align_terrain.ground_offset - ground[0].y;
-            //         }
-
-            //     }
-
-            //     for(let p of ground){
-            //         this.terrain_ground.push({x: p.x, y: p.y + ground_y_offset});
-            //     }
-            // }
-
-            // // Creates ceiling terrain
-            // if(ceiling.length > 0) {
-            //     // Handles smoothing and alignment of the ceiling with the startpad
-            //     let ceiling_y_offset = 0
-            //     if(this.align_terrain.align && this.align_terrain.smoothing != null){
-
-            //         // Applies the smoothing as the ratio: current smoothing / previous smoothing
-            //         ceiling = [...ceiling.map(p => {
-            //             return {x: p.x, y: p.y / (this.TERRAIN_CPPN_SCALE / this.align_terrain.smoothing)};
-            //         })];
-
-            //         // Aligns the ceiling with the startpad
-            //         if(this.align_terrain.ceiling_offset == null){
-            //             ceiling_y_offset = TERRAIN_HEIGHT + this.ceiling_offset - ceiling[0].y;
-            //         }
-            //         // Keeps the same ceiling alignment (adjusted to fit the smoothing)
-            //         else{
-            //             ceiling_y_offset = (this.ceiling_offset - ceiling[0].y) - this.align_terrain.ceiling_offset;
-            //         }
-            //     }
-
-            //     for(let p of ceiling){
-            //         this.terrain_ceiling.push({x: p.x, y: p.y + ceiling_y_offset});
-            //     }
-            // }
         }
         /* CPPN GENERATION: generates the terrain from the output of the CPPN model encoded with the input vector */
         else{
@@ -999,34 +947,10 @@ class MultiAgentsContinuousParkour {
         // Water
         this.min_ground_y = Math.min(...this.terrain_ground.map(p => p.y));
         this.air_max_distance = Math.max(...this.terrain_ceiling.map(p => p.y)) - this.min_ground_y;
-        // // this.water_y = this.min_ground_y + this.water_level * this.air_max_distance;
-        // this.water_y = this.min_ground_y
-
-        // let water_poly = [
-        //     [this.terrain_ground[0].x - 1000, this.GROUND_LIMIT],
-        //     [this.terrain_ground[0].x - 1000, this.water_y],
-        //     [this.terrain_ground[this.terrain_ground.length - 1].x + 1000, this.water_y],
-        //     [this.terrain_ground[this.terrain_ground.length - 1].x + 1000, this.GROUND_LIMIT]
-        // ];
-
-        // this.fd_water.shape.Set([new b2.Vec2(water_poly[0][0], water_poly[0][1]),
-        //         new b2.Vec2(water_poly[1][0], water_poly[1][1]),
-        //         new b2.Vec2(water_poly[2][0], water_poly[2][1]),
-        //         new b2.Vec2(water_poly[3][0], water_poly[3][1])],
-        //     4);
 
         let body_def = new b2.BodyDef();
         body_def.type = b2.Body.b2_staticBody;
         let t = this.world.CreateBody(body_def);
-        // t.CreateFixture(this.fd_water);
-        // t.SetUserData(new CustomUserData("water", CustomUserDataObjectTypes.WATER));
-        // let color = "#77ACE5"; // [0.465, 0.676, 0.898];
-        // this.water_poly = {
-        //     type : "water",
-        //     color: color,
-        //     vertices: water_poly,
-        //     body : t
-        // };
 
         // Ground
         let grass_terrain_bodies = [];
@@ -1070,136 +994,6 @@ class MultiAgentsContinuousParkour {
         }
 
         this.terrain_bodies = grass_terrain_bodies.concat(this.terrain_bodies);
-
-        // Pit
-
-
-        // Stairs
-
-        // Stumps
-
-        // Ceiling
-        // for(let i = 0; i < this.terrain_ceiling.length - 1; i++){
-        //     poly = [
-        //         [this.terrain_ceiling[i].x, this.terrain_ceiling[i].y],
-        //         [this.terrain_ceiling[i + 1].x, this.terrain_ceiling[i + 1].y]
-        //     ];
-        //     this.fd_edge.shape.Set(new b2.Vec2(poly[0][0], poly[0][1]),
-        //         new b2.Vec2(poly[1][0], poly[1][1]));
-        //     body_def = new b2.BodyDef();
-        //     body_def.type = b2.Body.b2_staticBody;
-        //     t = this.world.CreateBody(body_def);
-        //     t.CreateFixture(this.fd_edge);
-        //     t.SetUserData(new CustomUserData("rock", CustomUserDataObjectTypes.GRIP_TERRAIN)); // TODO: CustomUserData
-        //     color = "#004040"; // [0, 0.25, 0.25];
-        //     poly_data = {
-        //         type : "ceiling",
-        //         color : color,
-        //         body : t,
-        //     }
-        //     this.terrain_bodies.push(poly_data);
-
-        //     // Visual poly to fill the ceiling
-        //     if(i <= this.terrain_ceiling.length / 2){
-        //         poly.push([poly[1][0] + 10 * TERRAIN_STEP, 2 * this.CEILING_LIMIT]);
-        //         poly.push([poly[0][0], 2 * this.CEILING_LIMIT]);
-        //     }
-        //     else{
-        //         poly.push([poly[1][0], 2 * this.CEILING_LIMIT]);
-        //         poly.push([poly[0][0] - 10 * TERRAIN_STEP, 2 * this.CEILING_LIMIT]);
-        //     }
-        //     color = "#808080"; // [0.5, 0.5, 0.5];
-        //     poly_data = {
-        //         type : "ceiling",
-        //         color : color,
-        //         vertices : poly,
-        //     }
-        //     this.background_polys.push(poly_data);
-        // }
-
-        // Creepers
-        // if(this.creepers_width != null && this.creepers_height != null){
-        //     let creeper_width = Math.max(0.2, this.creepers_width);
-        //     let nb_creepers = Math.floor(this.terrain_ceiling[this.terrain_ceiling.length - 1].x / (this.creepers_spacing + creeper_width));
-
-        //     for(let i = 1; i < nb_creepers; i++){
-        //         let creeper_height = Math.max(0.2, Math.random() * (0.1 - (- 0.1)) + this.creepers_height - 0.1);
-        //         let creeper_x_init_pos = i * (this.creepers_spacing + creeper_width);
-        //         let creeper_y_init_pos = find_best_y(creeper_x_init_pos, this.terrain_ceiling);
-
-        //         // Breaks creepers in multiple dynamic bodies linked by joints
-        //         if(this.movable_creepers){
-
-        //             // Creates a static base to which the creeper is attached
-        //             this.fd_creeper.shape.SetAsBox(creeper_width/2, 0.2);
-        //             body_def = new b2.BodyDef();
-        //             body_def.type = b2.Body.b2_staticBody;
-        //             body_def.position.Set(creeper_x_init_pos, creeper_y_init_pos - 0.1);
-        //             t = this.world.CreateBody(body_def);
-        //             t.CreateFixture(this.fd_creeper);
-        //             t.SetUserData(new CustomUserData("creeper", CustomUserDataObjectTypes.SENSOR_GRIP_TERRAIN));
-        //             let previous_creeper_part = t;
-
-        //             // Cuts the creeper in unit parts
-        //             for(let w = 0; w < Math.ceil(creeper_height); w++){
-        //                 let h;
-        //                 // last iteration: rest of the creeper
-        //                 if(w == Math.floor(creeper_height / CREEPER_UNIT)){
-        //                     h = Math.max(0.2, creeper_height % CREEPER_UNIT);
-        //                 }
-        //                 else{
-        //                     h = CREEPER_UNIT;
-        //                 }
-
-        //                 this.fd_creeper.shape.SetAsBox(creeper_width/2, h/2);
-        //                 body_def = new b2.BodyDef();
-        //                 body_def.type = b2.Body.b2_dynamicBody;
-        //                 body_def.position.Set(creeper_x_init_pos, creeper_y_init_pos - (w * CREEPER_UNIT) - h/2);
-        //                 t = this.world.CreateBody(body_def);
-        //                 t.CreateFixture(this.fd_creeper);
-        //                 t.SetUserData(new CustomUserData("creeper", CustomUserDataObjectTypes.SENSOR_GRIP_TERRAIN));
-        //                 color = "#6F8060"; // [0.437, 0.504, 0.375];
-        //                 poly_data = {
-        //                     type : "creeper",
-        //                     color1 : color,
-        //                     color2 : color,
-        //                     body : t,
-        //                 }
-        //                 this.terrain_bodies.push(poly_data);
-
-        //                 let rjd_def = new b2.RevoluteJointDef();
-        //                 let anchor = new b2.Vec2(creeper_x_init_pos, creeper_y_init_pos - (w * CREEPER_UNIT));
-        //                 rjd_def.Initialize(previous_creeper_part, t, anchor);
-        //                 rjd_def.enableMotor = false;
-        //                 rjd_def.enableLimit = true;
-        //                 rjd_def.lowerAngle = -0.4 * Math.PI;
-        //                 rjd_def.upperAngle = 0.4 * Math.PI;
-        //                 let joint = this.world.CreateJoint(rjd_def);
-        //                 joint.SetUserData(new CustomMotorUserData("creeper", 6, false));
-        //                 this.creepers_joints.push(joint);
-        //                 previous_creeper_part = t;
-        //             }
-        //         }
-
-        //         // Creates only one static creeper body
-        //         else{
-        //             this.fd_creeper.shape.SetAsBox(creeper_width/2, creeper_height/2);
-        //             body_def = new b2.BodyDef();
-        //             body_def.type = b2.Body.b2_staticBody;
-        //             body_def.position.Set(creeper_x_init_pos, creeper_y_init_pos - creeper_height/2);
-        //             t = this.world.CreateBody(body_def);
-        //             t.CreateFixture(this.fd_creeper);
-        //             t.SetUserData(new CustomUserData("creeper", CustomUserDataObjectTypes.SENSOR_GRIP_TERRAIN));
-        //             color = "#6F8060"; // [0.437, 0.504, 0.375];
-        //             poly_data = {
-        //                 type : "creeper",
-        //                 color1 : color,
-        //                 body : t,
-        //             }
-        //             this.terrain_bodies.push(poly_data);
-        //         }
-        //     }
-        // }
     }
 
     /**
@@ -1392,22 +1186,25 @@ class MultiAgentsContinuousParkour {
      * Deletes the agent corresponding to the given index in the list of agents.
      * @param agent_index {number}
      */
-    delete_agent(agent_index){
-        if (!Array.isArray(agent_index)) {
-            agent_index = [agent_index,];
+    delete_agent(name, aux_only=false){
+        if (!Array.isArray(name)) {
+            name = [name,];
         }   
 
+        let num_found = 0;
         let updated_agents = [];
         let updated_game_obs = [];
         let updated_game_rewards = [];
-        for(let i=0; i < agent_index.length; i++) {
-            if (i >= this.agents.length) {
-                continue;
+        for(let i=0; i < this.agents.length; i++) {
+            let agent = this.agents[i];
+
+            let match = name.includes(agent.name);
+
+            if (match) {
+                num_found += 1
             }
 
-            let agent = this.agents[i];
-            if (agent_index.includes(i)) {
-                // remove the agent
+            if (match && !(aux_only && num_found == 1)) {
                 agent.agent_body.destroy(this.world);
             }
             else {

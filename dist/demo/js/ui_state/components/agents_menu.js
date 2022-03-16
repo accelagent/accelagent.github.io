@@ -22,6 +22,18 @@ export default class AgentsMenu extends Component {
         });
     }
 
+    _agent_at_menu_index_visible(index) {
+        let name = Object.entries(store.state.name2agents)[index][0];
+        let state = store.state;
+        for (let i=0; i < state.agents.length; i++) {
+            if (state.agents[i].name == name && state.agents[i].visible) {
+                console.log(state.agents);
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Renders the list of running agents and adds event listeners to the different elements.
      */
@@ -107,7 +119,7 @@ export default class AgentsMenu extends Component {
                     store.dispatch('deleteAgent', {index: index, keep: true});
                 }   
             });
-            span.checked = index < store.state.agents.length ? store.state.agents[index].visible : false;
+            span.checked = index < store.state.agents.length ? this._agent_at_menu_index_visible(index) : false;
         });
 
         // Renames the agent

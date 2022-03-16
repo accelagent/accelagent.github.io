@@ -586,27 +586,6 @@ function mouseWheel(event){
 }
 
 /**
- * Handles actions when a key is pressed.
- * @returns {boolean}
- */
-function keyPressed(){
-    // Deletes the agent or asset selected when pressing the delete key
-    if(keyCode == DELETE){
-        if(window.agent_selected != null){
-            window.delete_agent(agent_selected);
-            window.agent_selected(null);
-            return false;
-        }
-        else if(window.asset_selected != null){
-            window.game.env.delete_asset(window.asset_selected);
-            window.asset_selected = null;
-            window.game.env.render();
-            return false;
-        }
-    }
-}
-
-/**
  * Handles actions when the window is resized.
  */
 function windowResized(){
