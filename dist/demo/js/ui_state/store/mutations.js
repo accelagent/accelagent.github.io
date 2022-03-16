@@ -175,6 +175,7 @@ export default {
         state.simulationState.status = 'init';
 
         // Gets the morphology, policy and position of the current running agents
+        state = this.resampleVisibleAgents(state);
         let activeAgents = state.agents;
         // if (!state.simulationState.showAuxAgents) {
         //     activeAgents = [];
@@ -232,7 +233,6 @@ export default {
             smoothing: window.game.env.TERRAIN_CPPN_SCALE // smoothing of the current terrain
         };
 
-        // @TODO: Shuffle agents in the reset
 
         // Reinitializes the environment
         window.game.reset(
@@ -251,6 +251,43 @@ export default {
 
         this.resetFollowedAgent(state);
 
+        return state;
+    },
+
+    resampleVisibleAgents(state) {
+        if (state.simulationState.showAuxAgents) {
+            return state;
+        }
+
+        let agent_name2index = this.agentName2VisibleIndex(state)[0];
+        let agents = state.agents;
+        for(const [name, agent_index] of Object.entries(agent_name2index)) {
+            let shuffle = false
+            for (let i=0;i<agent_index.length;i++) {
+                if (agents[agent_index[i]].visible) {
+                    agents[agent_index[i]].visible = false;
+                    shuffle = true;
+                    break;
+                }
+            }
+
+            if (shuffle) {
+                let startIndex = min(...agent_index);
+                let sampledIndex = Math.floor(Math.random() * agent_index.length) + startIndex;
+                let tmp = agents[sampledIndex];
+                agents[sampledIndex] = agents[startIndex];
+                agents[sampledIndex].visible = false;
+                agents[startIndex] = tmp;
+                agents[startIndex].visible = true;
+            }
+        }
+
+        // let updated_agents = [];
+        // for (let i=0;i<agents.length;i++) {
+        //     updated_agents.push(agents[i]);
+        // }
+
+        // state.agents = updated_agents;
         return state;
     },
 
@@ -301,14 +338,14 @@ export default {
             name2index[name] = [];
         }
 
-        for(let i=0; i < window.game.env.agents.length;i++) {
-            let agent = window.game.env.agents[i];
-            name2index_window[agent.name].push(i);
-        }
-
         for(let i=0; i < state.agents.length; i++) {
             let agent = state.agents[i];
             name2index[agent.name].push(i)
+        }
+
+        for(let i=0; i < window.game.env.agents.length;i++) {
+            let agent = window.game.env.agents[i];
+            name2index_window[agent.name].push(i);
         }
 
         return [name2index, name2index_window];
@@ -580,25 +617,41 @@ export default {
         if(window.game == null) {
             return state;
         }
-        
+
         state.agents.sort(sortAgents);
+        state = this.resampleVisibleAgents(state)
 
         let updated_name2agents = {};
-        let agent_ordering_list = Object.entries(AGENT_ORDERING);
-        for (let i=0; i<agent_ordering_list.length; i++) {
-            let name = agent_ordering_list[i][0];
-            updated_name2agents[name] = state.name2agents[name];
+        // let agent_ordering_list = Object.entries(AGENT_ORDERING);
+        // for (let i=0; i<agent_ordering_list.length; i++) {
+        //     let name = agent_ordering_list[i][0];
+        //     updated_name2agents[name] = state.name2agents[name];
+        // }
+        for (let i=0; i<state.agents.length;i++) {
+            let agent = state.agents[i];
+            if (updated_name2agents.hasOwnProperty(agent.name)) {
+                updated_name2agents[agent.name].push(agent);
+            }
+            else {
+                updated_name2agents[agent.name] = [agent];
+            }
         }
+
         state.name2agents = updated_name2agents;
 
         window.game.env.delete_all_agents();
 
         for (let [name, agents] of Object.entries(state.name2agents)) {
-            let num_agents = state.simulationState.showAuxAgents ? agents.length : 1;
-            for (i=0; i < num_agents; i++) {
-                let agent = agents[i];
-                if(window.game != null && agent.visible){
-                    window.game.env.add_agent(agent.morphology, agent);
+            for (i=0; i < agents.length; i++) {
+                let agent = agents[i]
+                if (agent.visible) {
+                    if(window.game != null && agent.visible){
+                        window.game.env.add_agent(agent.morphology, agent);
+                    }
+
+                    if (!state.simulationState.showAuxAgents) {
+                        break;
+                    }
                 }
             }
         }
