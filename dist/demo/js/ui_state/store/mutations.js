@@ -172,17 +172,24 @@ export default {
      * @return {Object} - UI state
      */
     resetSimulation(state, payload) {
+        // Get previous simulator info
+        if (window.game.steps > 250) {
+            let returns = window.game.returns()
+            let max_return = Math.max(...returns);
+            let return_rate = max_return/window.game.steps;
+            if (return_rate <= 0.2) { // Log adversarial level
+                let metadata = window.game.env.full_level_description();
+                metadata.max_return = max_return;
+                metadata.demo_version = window.DEMO_VERSION;
+                mixpanel.track("adversarial_level", metadata);
+            }
+        }
+
         state.simulationState.status = 'init';
 
         // Gets the morphology, policy and position of the current running agents
         state = this.resampleVisibleAgents(state);
         let activeAgents = state.agents;
-        // if (!state.simulationState.showAuxAgents) {
-        //     activeAgents = [];
-        //     for (let [name, agents] of Object.entries(state.name2agents)) {
-        //         activeAgents.push(agents[0]);
-        //     }
-        // }
 
         const agents = {
             morphologies: activeAgents.map(a => a.morphology),
@@ -198,7 +205,6 @@ export default {
         }
 
         let name2game_agents = this.agentsByName(window.game.env.agents);
-        console.log('GAME AGENTS:', window.game.env.agents)
 
         if (payload.keepPositions) {
             agents.positions = [...activeAgents.map((agent, index) => {

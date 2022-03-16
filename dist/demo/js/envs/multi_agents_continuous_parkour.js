@@ -405,8 +405,6 @@ class MultiAgentsContinuousParkour {
         this.world.m_contactManager.m_contactListener.water_contact_detector.fixture_pairs = this.world.m_contactManager.m_contactListener.water_contact_detector.fixture_pairs.filter(function(fp, index, array){
             return fp[0].GetShape() != null && fp[1].GetShape() != null;
         });
-        // Calculates water physics
-        // this.water_dynamics.calculate_forces(this.world.m_contactManager.m_contactListener.water_contact_detector.fixture_pairs);
 
         let ret = [];
 
@@ -658,6 +656,30 @@ class MultiAgentsContinuousParkour {
         return config;
     }
 
+    full_level_description() {
+        let body_infos = this.terrain_bodies.filter((body_info) => {
+            return body_info.body.m_fixtureList.m_shape.hasOwnProperty('m_vertices');
+        });
+
+        let terrain_bodies = body_infos.map((body_info) => {
+            let vertices = body_info.body.m_fixtureList.m_shape.m_vertices.map((v) => {
+                return {x: v.x, y: v.y};
+            });
+
+            return {
+                type: body_info.type,
+                vertices: vertices
+            }
+        });
+
+        let description = {
+            terrain_ground: this.terrain_ground,
+            terrain_bodies: terrain_bodies
+        };
+
+        return description;
+    }
+
     _generate_grass(ranges=null) {
         // Hardcore config
         const config = HARDCORE_CONFIG;
@@ -852,7 +874,6 @@ class MultiAgentsContinuousParkour {
         }
 
         this.terrain_bodies = this.terrain_bodies.reverse()
-        console.log(this.terrain_bodies)
 
         for(let i = 0; i < TERRAIN_LENGTH; i++){
             this.terrain_ground.push({x: terrain_x[i], y: terrain_y[i]});

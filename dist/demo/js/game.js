@@ -56,6 +56,7 @@ class Game {
             ceiling,
             align_terrain);
 
+        this.steps = 0;
         this.env.set_environment(cppn_input_vector, water_level, creepers_width, creepers_height, creepers_spacing, smoothing, creepers_type);
         let step_rets = this.env.reset();
         this.obs.push([...step_rets.map(e => e[0])]);
@@ -89,6 +90,7 @@ class Game {
         // Creates a repeated interval over time
         this.runtime = setInterval(() => {
             this.play();
+            this.steps += 1;
         }, 1000 / this.run_fps);
         this.running = true;
     }
@@ -119,6 +121,13 @@ class Game {
         // Keeps the previous zoom and scroll
         window.game.env.set_zoom(zoom);
         window.game.env.set_scroll(null, scroll[0], scroll[1]);
+
+        this.steps = 0;
+        this.obs = [];
+        this.rewards = [];
+        let step_rets = this.env.step();
+        this.obs.push([...step_rets.map(e => e[0])]);
+        this.rewards.push([...step_rets.map(e => e[1])]);
 
         this.env.render();
     }
@@ -198,5 +207,22 @@ class Game {
         
 
         this.env.render();
+    }
+
+    returns() {
+        let num_agents = window.game.env.agents.length;
+
+        let rewards = this.rewards.filter((r) => {
+            return r.length == num_agents;
+        });
+
+        let returns = new Array(num_agents).fill(0);
+        for (let t=0; t < rewards.length; t++) {
+            for (let a=0; a<rewards[t].length;a++) {
+                returns[a] += rewards[t][a];
+            }
+        }
+
+        return returns;
     }
 }

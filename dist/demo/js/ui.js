@@ -65,7 +65,18 @@ runButton.addEventListener('click', () => {
 });
 const resetButton = document.querySelector("#resetButton");
 resetButton.addEventListener('click', () => {
+    // Get max x of all agents
+    // if (window.game.steps > 250) {
+    //     let returns = window.game.returns()
+    //     let return_rate = Math.max(...returns)/window.game.steps;
+    //     if (return_rate <= 0.2) { // Log adversarial level
+    //         let level_description = window.game.env.full_level_description();
+    //         mixpanel.track
+    //     }
+    // }
+
     store.dispatch('resetSimulation', {});
+    // Check if furthest agent is greater than init position. If so, track mixpanel
 });
 
 const mainButtonsInstance = new MainButtons();
