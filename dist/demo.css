@@ -470,10 +470,12 @@ pre {
 
     ul#env-controls {
         width: 100%;
+        position: relative;
+        padding: 0px;
     }
 
     input[type="range"].multirange, input[type="range"].multirange {
-        width: 80%;
+        width: 100%;
     }
 }
 
