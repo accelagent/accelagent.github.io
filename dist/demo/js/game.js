@@ -182,6 +182,21 @@ class Game {
         this.obs.push([...step_rets.map(e => e[0])]);
         this.rewards.push([...step_rets.map(e => e[1])]);
 
+        for(let agent of window.game.env.agents){
+            if (agent.name == window.agent_name_followed) {
+                let x = agent.agent_body.reference_head_object.m_xf.p.x;
+                if (window.hasOwnProperty('furthest_agent_followed') && window.furthest_agent_followed != null) {
+                    if (x > furthest_agent_followed.agent_body.reference_head_object.m_xf.p.x) {
+                        window.furthest_agent_followed = agent;
+                    }   
+                }
+                else {
+                    window.furthest_agent_followed = agent;
+                }
+            }
+        }
+        
+
         this.env.render();
     }
 }

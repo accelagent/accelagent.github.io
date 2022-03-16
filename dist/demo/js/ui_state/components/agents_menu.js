@@ -75,6 +75,8 @@ export default class AgentsMenu extends Component {
             }
         }).join('');
 
+        const agent_menu_names_list = Object.entries(store.state.name2agents);
+
         // Renders the list items differently when drawing or if the agent is selected
         this.element.querySelectorAll('li[name="agents-menu-item"]').forEach((span, index) => {
             if(store.state.drawingModeState.drawing){
@@ -104,9 +106,9 @@ export default class AgentsMenu extends Component {
         // Follows the agent
         this.element.querySelectorAll('input[name="followSwitch"]').forEach((span, index) => {
             span.addEventListener('input', () => {
-                store.dispatch('followAgent', {index: span.checked ? index : -1});
+                store.dispatch('followAgent', {name: span.checked ? agent_menu_names_list[index][0] : null});
             });
-            span.checked = store.state.simulationState.agentFollowed == store.state.agents[index];
+            span.checked = store.state.simulationState.agentNameFollowed == agent_menu_names_list[index][0];
         });
 
         // Renders the agent

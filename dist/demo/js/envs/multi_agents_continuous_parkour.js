@@ -380,23 +380,12 @@ class MultiAgentsContinuousParkour {
     step(){
         // Checks if agents are dead according to their morphology
         for(let agent of this.agents){
-            if(agent.agent_body.body_type == BodyTypesEnum.SWIMMER){
-                if(agent.nb_steps_outside_water > agent.agent_body.nb_steps_can_survive_outside_water){
-                    agent.is_dead = true;
-                    agent.actions = Array.from({length: agent.agent_body.get_action_size()}, () => 0);
-                }
-                else{
-                    agent.is_dead = false;
-                }
+            if(agent.nb_steps_under_water > agent.agent_body.nb_steps_can_survive_under_water){
+                agent.is_dead = true;
+                agent.actions = Array.from({length: agent.agent_body.get_action_size()}, () => 0);
             }
             else{
-                if(agent.nb_steps_under_water > agent.agent_body.nb_steps_can_survive_under_water){
-                    agent.is_dead = true;
-                    agent.actions = Array.from({length: agent.agent_body.get_action_size()}, () => 0);
-                }
-                else{
-                    agent.is_dead = false;
-                }
+                agent.is_dead = false;
             }
 
             // Makes the agent moves according to its actions
@@ -411,13 +400,6 @@ class MultiAgentsContinuousParkour {
         // Updates Box2D world
         //this.world.Step(1.0 / FPS, 45, 15);
         this.world.Step(1.0 / FPS, 3 * 30, 1 * 30);
-
-        for(let agent of this.agents) {
-            // Creates joints between sensors ready to grasp if collision with graspable area was detected
-            if(agent.agent_body.body_type == BodyTypesEnum.CLIMBER){
-                this.climbing_dynamics.after_step_climbing_dynamics(this.world.m_contactManager.m_contactListener.climbing_contact_detector, this.world);
-            }
-        }
 
         // Filters null fixture pairs to avoid errors with water collisions
         this.world.m_contactManager.m_contactListener.water_contact_detector.fixture_pairs = this.world.m_contactManager.m_contactListener.water_contact_detector.fixture_pairs.filter(function(fp, index, array){

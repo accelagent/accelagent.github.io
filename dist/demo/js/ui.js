@@ -344,8 +344,8 @@ window.set_agent_selected = (index) => {
  * Handles agent following according to the given index.
  * @param index {number} - Index of the agent to select in the list of agents
  */
-window.set_agent_followed = (index) => {
-    store.dispatch('followAgent', {index: index});
+window.set_agent_name_followed = (name) => {
+    store.dispatch('followAgent', {name: name});
 }
 
 /**

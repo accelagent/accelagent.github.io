@@ -470,14 +470,19 @@ function drawSkyClouds(env){
     pop();
 }
 
+
 /**
  * Draws all the bodies composing the terrain of the given environment.
  * @param env {Object}
  */
 function drawTerrain(env){
     // Updates scroll to stay centered on the agent position
-    if(window.agent_followed != null){
-        env.set_scroll(window.agent_followed, null, null);
+    if(window.agent_name_followed != null){
+        // @todo: Get the furthest agent for name
+        if (window.hasOwnProperty('furthest_agent_followed')) {
+            env.set_scroll(window.furthest_agent_followed, null, null);
+        }
+        // env.set_scroll(window.agent_followed, null, null);
     }
 
     // Sky & clouds

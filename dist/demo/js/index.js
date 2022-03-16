@@ -421,8 +421,8 @@ function mouseDragged(){
             if(!window.is_dragging_agent && !window.is_dragging_asset){
 
                 // Scrolling manually cancels agent following
-                if(window.agent_followed != null){
-                    window.set_agent_followed(-1);
+                if(window.agent_name_followed != null){
+                    window.set_agent_name_followed(null);
                 }
                 window.game.env.set_scroll(null, window.game.env.scroll[0] + window.prevMouseX - mouseX, window.game.env.scroll[1] + mouseY - prevMouseY);
                 window.game.env.render();

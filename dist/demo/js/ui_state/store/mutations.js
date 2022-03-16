@@ -249,9 +249,7 @@ export default {
             window.align_terrain);
 
 
-        if(window.game.env.agents.length > 0) {
-            this.followAgent(state, {index:0});
-        }
+        this.resetFollowedAgent(state);
 
         return state;
     },
@@ -314,6 +312,19 @@ export default {
         }
 
         return [name2index, name2index_window];
+    },
+
+    visibleAgentNames(state) {
+        let agent_name2index = this.agentName2VisibleIndex(state)[1];
+
+        let agent_names = [];
+        for (const [name, agents] of Object.entries(agent_name2index)) {
+            if (agents.length > 0) {
+                agent_names.push(name);
+            }
+        }
+
+        return agent_names;
     },
 
     showAuxAgents(state) {
@@ -395,7 +406,8 @@ export default {
      * @return {Object} - UI state
      */
     deleteAgent(state, payload) {
-        let agent_name = Object.entries(state.name2agents)[payload.index][0]
+        let name2agents_list = Object.entries(state.name2agents)[payload.index];
+        let agent_name = name2agents_list[0]
         let agent_all_index = this.agentName2VisibleIndex(state);
         let agent_index = agent_all_index[0][agent_name]
         let agent_window_index = agent_all_index[1][agent_name]
@@ -430,6 +442,11 @@ export default {
             // }
             window.game.env.delete_agent(agent_name, payload.aux_only);
             window.game.env.render();
+        }
+
+
+        if (state.simulationState.agentFollowed == payload.index) {
+
         }
 
         return state;
@@ -473,16 +490,25 @@ export default {
      * @return {Object} - UI state
      */
     followAgent(state, payload) {
-        if(payload.index != -1){
-            window.agent_followed = window.game.env.agents[payload.index];
-            state.simulationState.agentFollowed = state.agents[payload.index];
+        if(payload.name != null){
+            let name2index_window = this.agentName2VisibleIndex(state)[1];
+            if (name2index_window[payload.name].length > 0) {
+                window.agent_name_followed = payload.name;
+                window.furthest_agent_followed = null;
+                state.simulationState.agentNameFollowed = payload.name;
+            }
+            else {
+                return state;
+            }
         }
         // Sets the followed agent to null if index == -1
         else {
-            window.agent_followed = null;
-            state.simulationState.agentFollowed = null;
+            window.furthest_agent_followed = null;
+            window.agent_name_followed = null;
+            state.simulationState.agentNameFollowed = null;
         }
         window.game.env.render();
+
         return state;
     },
 
@@ -577,13 +603,27 @@ export default {
             }
         }
 
-        if(window.game.env.agents.length > 0) {
-            this.followAgent(state, {index:0});
-        }
+        this.resetFollowedAgent(state);
 
         window.game.env.render();
 
         return state;
+    },
+
+    resetFollowedAgent(state) {
+        if(window.game.env.agents.length > 0) {
+            let followedName = window.agent_name_followed;
+            let visibleAgentNames = this.visibleAgentNames(state);
+            if (!followedName && visibleAgentNames.length > 0) {
+                followedName = visibleAgentNames[0]
+            }
+
+            if (!followedName) {
+                followedName = null;
+            }
+
+            this.followAgent(state, {name:followedName});
+        }
     },
 
     /**

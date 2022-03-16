@@ -12,7 +12,7 @@ export default {
     simulationState: {
         status: 'init', // 'running', 'paused'
         intro_tour: false,
-        agentFollowed: null,
+        agentNameFollowed: null,
         agentSelected: null,
     },
     activeTab:'getting_started', // 'getting_started', 'draw_yourself', 'proc_gen', 'advanced_options', 'about'
