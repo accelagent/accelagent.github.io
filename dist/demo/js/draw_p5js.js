@@ -567,20 +567,20 @@ function drawTerrain(env){
     }
 
     // Draws a flag on startpad
-    let flag_y1 = TERRAIN_HEIGHT;
-    let flag_y2 = flag_y1 + 90 / env.scale;
-    let flag_x = TERRAIN_STEP * 3;
-    vertices = [
-        [flag_x, flag_y1],
-        [flag_x, flag_y2]
-    ]
-    drawLine(vertices, "#000000");
-    vertices = [
-        [flag_x, flag_y2],
-        [flag_x, flag_y2 - 20 / env.scale],
-        [flag_x + 40 / env.scale, flag_y2 - 10 / env.scale]
-    ]
-    drawPolygon(vertices, "#E63300");
+    // let flag_y1 = TERRAIN_HEIGHT;
+    // let flag_y2 = flag_y1 + 90 / env.scale;
+    // let flag_x = TERRAIN_STEP * 3;
+    // vertices = [
+    //     [flag_x, flag_y1],
+    //     [flag_x, flag_y2]
+    // ]
+    // drawLine(vertices, "#000000");
+    // vertices = [
+    //     [flag_x, flag_y2],
+    //     [flag_x, flag_y2 - 20 / env.scale],
+    //     [flag_x + 40 / env.scale, flag_y2 - 10 / env.scale]
+    // ]
+    // drawPolygon(vertices, "#E63300");
 
     // Draws all assets
     for(let asset of env.assets_bodies){
