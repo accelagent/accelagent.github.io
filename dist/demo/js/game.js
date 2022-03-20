@@ -225,4 +225,43 @@ class Game {
 
         return returns;
     }
+
+    regrets(normalize=false) {
+        // Returns the regret for each agent training method by name
+        let returns = this.returns();
+        const game_agents = window.game.env.agents;
+
+        let agent_name2returns = {};
+        for (let i=0; i<game_agents.length; i++) {
+            let agent = game_agents[i];
+            if (agent_name2returns.hasOwnProperty(agent.name)) {
+                agent_name2returns[agent.name].push(returns[i]);
+            }
+            else {
+                agent_name2returns[agent.name] = [returns[i],];
+            }
+        }
+
+        let agent_name2max_returns = {};
+        let max_return = -9999999.0;
+        for (const [name, returns] of Object.entries(agent_name2returns)) {
+            let name_max = Math.max(...returns);
+            if (name_max > max_return) {
+                max_return = name_max;
+            }
+            agent_name2max_returns[name] = name_max;
+        }
+
+        let agent_regrets = {};
+        for (const [name, agent_max_return] of Object.entries(agent_name2max_returns)) {
+            agent_regrets[name] = max_return - agent_max_return;
+            if (normalize) {
+                agent_regrets[name] = agent_regrets[name]/max_return;
+            }
+        }
+
+        agent_regrets['max_return'] = max_return
+
+        return agent_regrets;
+    }
 }

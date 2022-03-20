@@ -1,5 +1,5 @@
 /* GLOBAL VARIABLES */
-window.DEMO_VERSION = 1.0;
+window.DEMO_VERSION = 1.1;
 
 window.erasing_radius = 15;
 window.asset_size = 8;

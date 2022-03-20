@@ -174,12 +174,10 @@ export default {
     resetSimulation(state, payload) {
         // Get previous simulator info
         if (window.game.steps > 250) {
-            let returns = window.game.returns()
-            let max_return = Math.max(...returns);
-            let return_rate = max_return/window.game.steps;
-            if (return_rate <= 0.2) { // Log adversarial level
+            let regrets = window.game.regrets(true);
+            if (regrets.hasOwnProperty('accel') && regrets['accel'] > 0.0) {
                 let metadata = window.game.env.full_level_description();
-                metadata.max_return = max_return;
+                metadata.regret_info = regrets;
                 metadata.demo_version = window.DEMO_VERSION;
                 mixpanel.track("adversarial_level", metadata);
             }
