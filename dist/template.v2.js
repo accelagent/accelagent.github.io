@@ -907,10 +907,10 @@ ${math}
   function link_string(ent) {
     if ("url" in ent) {
       var url = ent.url;
-      var arxiv_match = /arxiv\.org\/abs\/([0-9\.]*)/.exec(url);
-      if (arxiv_match != null) {
-        url = `http://arxiv.org/pdf/${arxiv_match[1]}.pdf`;
-      }
+      // var arxiv_match = /arxiv\.org\/abs\/([0-9\.]*)/.exec(url);
+      // if (arxiv_match != null) {
+      //   url = `http://arxiv.org/pdf/${arxiv_match[1]}.pdf`;
+      // }
 
       if (url.slice(-4) == ".pdf") {
         var label = "PDF";
