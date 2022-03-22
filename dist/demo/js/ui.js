@@ -217,6 +217,14 @@ document.querySelector("input[name=auxAgentsSwitch]").addEventListener('input', 
         target.checked = store.state.simulationState.showAuxAgents;
     });
 
+function addPreloadLinkToResource(path) {
+    const link = document.createElement('link');
+    link.href = path;
+    link.rel = 'prefetch';
+
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+
 /*
  * Fetches the available morphologies and policies from the JSON file
  */
@@ -234,9 +242,18 @@ fetch('./dist/policies.json')
                     morphology: morphology["morphology"],
                     seeds: morphology["seeds"].map((seed, index) => {
                         seed["idx"] = index;
+
+                        const path2model_bin = "dist/" + seed.path + "/group1-shard1of1.bin";
+                        const path2model_json = "dist/" + seed.path + "/model.json";
+
+                        addPreloadLinkToResource(path2model_bin);
+                        addPreloadLinkToResource(path2model_json);
+
                         return seed;
                     })
                 });
+
+                // Preload model files
             });
         });
     });
